@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>p5.js Fullscreen Canvas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let agentCount = 1000;
+      let overlayAlpha = 10; // 背景フェードを少し強く
+      let strokeWidth = 1.0;
+      let minus, plus;
+      let agents = [];
+      let pg;
+
+      function setup() {
+        createCanvas(windowWidth, windowHeight);
+        smooth(); // メインキャンバスのアンチエイリアスを有効化
+        pg = createGraphics(windowWidth, windowHeight);
+        pg.smooth(); // グラフィックバッファのアンチエイリアスを有効化
+        colorMode(RGB, 255);
+        minus = createVector(width * 0.75, height * 0.25); // 右上
+        plus = createVector(width * 0.25, height * 0.75); // 左下
+
+        for (let i = 0; i < agentCount; i++) {
+          agents.push(new Agent());
+        }
+      }
+
+      function draw() {
+        background(255);
+
+        // グラフィックバッファに描画
+        pg.colorMode(RGB, 255);
+        pg.noStroke();
+        pg.fill(0, 0, 0, overlayAlpha); // 軌跡を残すための透明な背景
+        pg.rect(0, 0, pg.width, pg.height);
+
+        // エージェントの描画
+        pg.stroke(255, 255, 255, 100); // 軌跡の透明度を強く
+        for (let i = 0; i < agents.length; i++) {
+          agents[i].update(pg, strokeWidth);
+        }
+
+        // 描画結果を画面に表示
+        image(pg, 0, 0);
+      }
+
+      class Agent {
+        constructor() {
+          this.vector = createVector(random(width), random(height));
+          this.vectorOld = this.vector.copy();
+          this.stepSize = random(1, 5);
+          this.ttl = 30 + random(100);
+          this.strokeAlpha = 255; // 初期の透明度
+        }
+
+        update(pg, strokeWidth) {
+          this.ttl--;
+
+          let k_p = 150.0 / max(5, distance2(this.vector, plus));
+          let k_m = -150.0 / max(5, distance2(this.vector, minus));
+
+          this.vector.x += k_p * (this.vector.x - plus.x);
+          this.vector.x += k_m * (this.vector.x - minus.x);
+          this.vector.y += k_p * (this.vector.y - plus.y);
+          this.vector.y += k_m * (this.vector.y - minus.y);
+
+          let isOutside =
+            this.vector.x < 0 ||
+            this.vector.x > width ||
+            this.vector.y < 0 ||
+            this.vector.y > height;
+
+          if (isOutside || this.ttl < 0) {
+            let x = width * random(100) * 0.01;
+            let y = height * random(100) * 0.01;
+            this.ttl = 50 + random(30);
+            this.vector.set(x, y);
+            this.vectorOld = this.vector.copy();
+            this.strokeAlpha = 255; // リセット時に透明度を初期化
+          }
+
+          pg.stroke(255, 255, 255, this.strokeAlpha);
+          pg.strokeWeight(strokeWidth);
+          pg.line(
+            this.vectorOld.x,
+            this.vectorOld.y,
+            this.vector.x,
+            this.vector.y
+          );
+          this.vectorOld = this.vector.copy();
+          this.strokeAlpha = max(0, this.strokeAlpha - 1); // 下限を0に設定
+        }
+      }
+
+      function distance2(v1, v2) {
+        return (v2.x - v1.x) ** 2 + (v2.y - v1.y) ** 2;
+      }
+
+      // ウィンドウサイズ変更時にキャンバスとバッファのサイズを更新
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+        pg = createGraphics(windowWidth, windowHeight);
+        pg.smooth(); // リサイズ時もアンチエイリアスを有効化
+        minus = createVector(width * 0.75, height * 0.25);
+        plus = createVector(width * 0.25, height * 0.75);
+      }
+    </script>
+  </body>
+</html>

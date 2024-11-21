@@ -1,4 +1,12 @@
-import { defineConfig } from "@pandacss/dev";
+import { defineConfig, defineGlobalStyles } from "@pandacss/dev";
+
+const globalCss = defineGlobalStyles({
+  "*": {
+    fontFamily: 'var(--font-satoshi-variable), "FOT-DNP ShueiGoKinStd"',
+    fontFeatureSettings: '"palt" on',
+    fontStyle: "normal",
+  },
+});
 
 export default defineConfig({
   // Whether to use css reset
@@ -15,8 +23,47 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      tokens: {
+        fontSizes: {
+          extraSmall: {
+            value: "12px",
+          },
+          small: {
+            value: "14px",
+          },
+        },
+      },
+      textStyles: {
+        extraSmall: {
+          value: {
+            fontSize: "extraSmall",
+            fontFamily:
+              'var(--font-satoshi-variable), "dnp-shuei-gothic-kin-std"',
+            fontStyle: "normal",
+            fontWeight: 470,
+            lineHeight: "125% /* 15px */",
+            letterSpacing: "0.24px",
+            textTransform: "uppercase",
+          },
+        },
+        small: {
+          value: {
+            fontSize: "small",
+            fontFamily:
+              'var(--font-satoshi-variable), "dnp-shuei-gothic-kin-std"',
+            fontStyle: "normal",
+            fontWeight: 470,
+            lineHeight: "125% /* 15px */",
+            letterSpacing: "0.24px",
+            textTransform: "uppercase",
+          },
+        },
+      },
+    },
   },
+
+  globalCss,
 
   // The output directory for your css system
   outdir: "styled-system",
