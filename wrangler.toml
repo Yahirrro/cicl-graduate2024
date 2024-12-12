@@ -1,9 +1,4 @@
-main = ".worker-next/index.mjs"
-name = "cicl-graduate2024"
+name = "cicl-graduate-show-2024"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
-assets = { directory = ".worker-next/assets", binding = "ASSETS" }
-
-[[kv_namespaces]]
-binding = "NEXT_CACHE_WORKERS_KV"
-id = "54e92b847c9841bb920bd8a2550216f8"
+pages_build_output_dir = ".vercel/output/static"

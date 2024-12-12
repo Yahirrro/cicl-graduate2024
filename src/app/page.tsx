@@ -5,6 +5,8 @@ import { OverviewSection } from "@/components/OverviewSection";
 import { TopSection } from "@/components/TopSection";
 import { VisualViewer } from "@/components/VisualViewer";
 
+export const runtime = "edge";
+
 export default function Home() {
   return (
     <div>
