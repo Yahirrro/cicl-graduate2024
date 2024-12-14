@@ -29,6 +29,7 @@ const topSectionStyles = sva({
       overflow: "hidden",
 
       mdDown: {
+        height: "100svh",
         px: "24px",
         pt: "32px",
         pb: "32px",
