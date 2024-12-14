@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useIsLoaded } from "@/app/hooks/useIsLoaded";
 
-const text = ["INSTITUTE-OF-INNOVATION", "GRADUATE-SHOW", "2025"];
+const text = ["INSTITUTE-OF-INNOVATION", "GRADUATE-SHOW", "2024"];
 
 export const LoadingAnimation: React.FC = () => {
   const isLoaded = useIsLoaded();
