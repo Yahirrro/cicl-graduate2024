@@ -1,17 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import { loadTypeSquare } from "@/app/utils/loadTypeSquare";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 
-declare global {
-  interface Window {
-    Ts: any;
-  }
-}
-
 export const TypeSquareLoader: React.FC = () => {
-  const [fontLoading, setFontLoading] = useState(true);
+  const [, setFontLoading] = useState(true);
 
   const isInjectTypeSquare = () => {
     if (typeof window === "undefined") return false;

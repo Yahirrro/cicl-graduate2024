@@ -1,4 +1,4 @@
-import { sva } from "../../styled-system/css";
+import { css, cx, sva } from "../../styled-system/css";
 import { FadeIn } from "./util/FadeIn";
 
 const topSectionStyles = sva({
@@ -27,6 +27,13 @@ const topSectionStyles = sva({
       height: "100vh",
       color: "white",
       overflow: "hidden",
+
+      mdDown: {
+        px: "24px",
+        pt: "32px",
+        pb: "32px",
+        gridTemplateColumns: "repeat(2, 1fr)",
+      },
     },
     topHeaderContainer: {
       display: "grid",
@@ -36,16 +43,27 @@ const topSectionStyles = sva({
       mb: "82px",
       textStyle: "extraSmall",
       alignContent: "end",
+      mdDown: {
+        gridColumn: "span 2",
+      },
     },
     topHeaderContainerTitle: {
       gridColumn: "1 / span 2",
       whiteSpace: "pre",
       textStyle: "extraSmall",
+      mdDown: {
+        display: "none",
+      },
     },
     topHeaderContainerSubtitle: {
       gridColumn: "4 / span 2",
       textAlign: "right",
       whiteSpace: "pre",
+      mdDown: {
+        gridColumn: "1 / span 2",
+        fontSize: "11px",
+        textAlign: "left",
+      },
     },
     topTitleContainer: {
       display: "grid",
@@ -53,6 +71,10 @@ const topSectionStyles = sva({
       gridColumn: "1 / span 5",
       mb: "64px",
       alignContent: "end",
+      mdDown: {
+        gridColumn: "1 / span 2",
+        mb: "32px",
+      },
     },
     topTitleContainerText: {
       display: "grid",
@@ -70,6 +92,10 @@ const topSectionStyles = sva({
       gridTemplateColumns: "subgrid",
       gridColumn: "1 / span 5",
       display: "grid",
+      mdDown: {
+        gridColumn: "1 / span 2",
+        gap: "24px",
+      },
     },
     topInfoContainerText: {
       whiteSpace: "pre",
@@ -80,6 +106,9 @@ const topSectionStyles = sva({
       gridColumn: "4 / span 2",
       gap: "10px",
       justifyItems: "end",
+      mdDown: {
+        display: "none",
+      },
     },
     topInfoLink: {
       display: "flex",
@@ -139,7 +168,16 @@ export const TopSection: React.FC<{
         </h1>
       </FadeIn>
       <FadeIn className={style.topInfoContainer} delay={4.5}>
-        <p className={style.topInfoContainerText}>
+        <p
+          className={cx(
+            style.topInfoContainerText,
+            css({
+              mdDown: {
+                gridColumn: "1 / -1",
+              },
+            })
+          )}
+        >
           {`ICHIGAYA CAMPUS,\nMUSASHINO ART UNIV.`}
         </p>
         <p className={style.topInfoContainerText}>{`2024/01/02 - 01/21`}</p>

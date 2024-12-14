@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { cx, sva } from "../../styled-system/css";
+import { css, cx, sva } from "../../styled-system/css";
 
 const footerStyles = sva({
   slots: [
@@ -27,6 +27,12 @@ const footerStyles = sva({
       pb: "72px",
       maxWidth: "1980px",
       mx: "auto",
+      mdDown: {
+        px: "32px",
+        gridTemplateColumns: "1fr",
+        pt: "48px",
+        pb: "42px",
+      },
     },
     text: {
       gridColumn: "span 2",
@@ -34,6 +40,9 @@ const footerStyles = sva({
       lineHeight: "150%",
       fontWeight: "470",
       whiteSpace: "pre-line",
+      mdDown: {
+        gridColumn: "span 1",
+      },
     },
     textUppercase: {
       textTransform: "uppercase",
@@ -47,21 +56,44 @@ const footerStyles = sva({
       gap: "0 24px",
       gridTemplateColumns: "subgrid",
       mb: "128px",
+      mdDown: {
+        gridColumn: "span 1",
+        gap: "24px",
+        mb: "64px",
+      },
     },
     socialContainer: {
       display: "grid",
       gridTemplateColumns: "24px 24px",
       gap: "24px",
       justifyContent: "flex-end",
+      mdDown: {
+        justifyContent: "flex-start",
+      },
     },
     footerContainer: {
       display: "grid",
       gridColumn: "1 / span 5",
       gridTemplateColumns: "subgrid",
+      mdDown: {
+        gridColumn: "span 1",
+        gap: "16px",
+      },
     },
     mauLogoContainer: {
       display: "flex",
       justifyContent: "flex-end",
+      "& svg": {
+        width: "79px",
+        height: "25px",
+        mdDown: {
+          height: "20px",
+          width: "auto",
+        },
+      },
+      mdDown: {
+        justifyContent: "flex-start",
+      },
     },
   },
 });
@@ -125,9 +157,24 @@ export const Footer: React.FC = () => {
 
         <div className={style.footerContainer}>
           <p
-            className={cx(style.text, style.textUppercase, style.opacity50)}
+            className={cx(
+              style.text,
+              style.textUppercase,
+              style.opacity50,
+              css({
+                mdDown: {
+                  order: 1,
+                },
+              })
+            )}
           >{`©︎ Musashino Art University`}</p>
-          <p className={cx(style.text, style.opacity50)}>
+          <p
+            className={cx(
+              style.text,
+              style.opacity50,
+              css({ mdDown: { mb: "32px" } })
+            )}
+          >
             <Link
               href={"https://github.com/Yahirrro/cicl-graduate2024"}
               target="_blank"
@@ -141,8 +188,6 @@ export const Footer: React.FC = () => {
             className={style.mauLogoContainer}
           >
             <svg
-              width="79"
-              height="25"
               viewBox="0 0 79 25"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

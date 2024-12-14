@@ -10,6 +10,12 @@ const introductionImagesStyles = sva({
       transform: "translateX(-72px)",
       padding: "0 calc(72px - 12px)",
       overflow: "hidden",
+      mdDown: {
+        gridColumn: "1 / span 3",
+        width: "calc(100% + 32px * 2)",
+        transform: "translateX(-32px)",
+        padding: "0 calc(32px - 8px)",
+      },
     },
     carousel: {
       display: "flex",
@@ -25,19 +31,12 @@ const introductionImagesStyles = sva({
         height: "100%",
         objectFit: "cover",
       },
-      //   _after: {
-      //     content: '""',
-      //     display: "block",
-      //     position: "absolute",
-      //     top: 0,
-      //     left: 0,
-      //     width: "100%",
-      //     height: "100%",
-      //     background: "rgba(0, 4, 128, 0.2)",
-      //     zIndex: 10,
-      //     mixBlendMode: "screen",
-      //   },
-      // },
+
+      mdDown: {
+        flex: "0 0 80%",
+        mx: "8px",
+        aspectRatio: "2 / 3",
+      },
     },
   },
 });

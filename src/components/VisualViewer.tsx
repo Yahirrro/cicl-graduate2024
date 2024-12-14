@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { cva } from "../../styled-system/css";
+import { useIsLoaded } from "@/app/hooks/useIsLoaded";
 
 const visualViewerStyle = cva({
   base: {
@@ -32,7 +33,13 @@ const visualViewerStyle = cva({
 });
 
 export const VisualViewer: React.FC = () => {
+  const isLoaded = useIsLoaded();
   const style = visualViewerStyle();
+
+  if (!isLoaded) {
+    return <></>;
+  }
+
   return (
     <motion.div
       className={style}
@@ -40,7 +47,7 @@ export const VisualViewer: React.FC = () => {
       animate={{
         scale: 1,
       }}
-      transition={{ delay: 2.5, duration: 3 }}
+      transition={{ delay: 2.5, duration: 5 }}
     >
       <iframe
         src="/assets/p5.html"

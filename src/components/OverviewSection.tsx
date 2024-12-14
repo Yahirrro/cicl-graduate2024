@@ -32,6 +32,16 @@ const overviewSectionStyles = sva({
         height: "1px",
         background: "rgba(0, 4, 128, 1)",
         gridColumn: "1 / span 5",
+        mdDown: {
+          gridColumn: "span 1",
+          width: "calc(100% - 64px)",
+          transform: "translateX(32px)",
+        },
+      },
+      mdDown: {
+        px: "32px",
+        gridTemplateColumns: "1fr",
+        gap: "64px",
       },
     },
     overviewSection: {
@@ -39,12 +49,18 @@ const overviewSectionStyles = sva({
       display: "grid",
       gridTemplateColumns: "1fr",
       height: "fit-content",
+      mdDown: {
+        gridColumn: "span 1",
+      },
     },
     detialSection: {
       gridColumn: "3 / span 2",
       display: "grid",
       gridTemplateColumns: "1fr",
       height: "fit-content",
+      mdDown: {
+        gridColumn: "span 1",
+      },
     },
     title: {
       fontSize: "14px",
@@ -60,10 +76,16 @@ const overviewSectionStyles = sva({
     detailText: {
       fontSize: "13px",
       mt: "20px",
+      mdDown: {
+        mt: "10px",
+      },
     },
     subtext: {
       fontSize: "11px",
       opacity: 0.5,
+      mdDown: {
+        fontSize: "12px",
+      },
     },
     locationLink: {
       display: "flex",
@@ -104,6 +126,10 @@ export const OverviewSection: React.FC = () => {
             css({
               mt: "64px",
               width: "50%",
+              mdDown: {
+                width: "100%",
+                mt: "20px",
+              },
             })
           )}
         >
@@ -122,6 +148,9 @@ export const OverviewSection: React.FC = () => {
             style.title,
             css({
               mt: "80px",
+              mdDown: {
+                mt: "64px",
+              },
             })
           )}
         >
@@ -133,6 +162,9 @@ export const OverviewSection: React.FC = () => {
             style.detailText,
             css({
               mb: "24px",
+              mdDown: {
+                mb: "20px",
+              },
             })
           )}
         >

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import TypekitLoader from "@/components/TypekitLoader";
-import Script from "next/script";
 import { TypeSquareLoader } from "@/components/TypeSquareLoader";
 import { css, cx } from "../../styled-system/css";
 

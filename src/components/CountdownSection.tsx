@@ -21,18 +21,46 @@ const countDownSectionStyles = sva({
         width: "80%",
         height: "1px",
         background: "rgba(0, 4, 128, 1)",
+        mdDown: {
+          gridColumn: "span 1",
+          width: "1px",
+          height: "100px",
+          margin: "0 auto",
+          mb: "32px",
+        },
+      },
+      mdDown: {
+        gridTemplateColumns: "1fr",
+        gap: "20px",
+        px: "32px",
+        pt: "16px",
+        pb: "128px",
       },
     },
     countdownTitle: {
       gridColumn: "3 / span 2",
-      fontSize: "32px",
+      fontSize: "20px",
+      mdDown: {
+        gridColumn: "span 1",
+        textAlign: "center",
+      },
     },
     countdownText: {
       gridColumn: "5 / span 1",
-      fontSize: "32px",
+      fontSize: "20px",
       "& span": {
         pr: "8px",
         fontSize: "110px",
+        mdDown: {
+          fontSize: "80px",
+          lineHeight: "1",
+          height: "80px",
+        },
+      },
+      mdDown: {
+        gridColumn: "span 1",
+        lineHeight: "1",
+        textAlign: "center",
       },
     },
   },
