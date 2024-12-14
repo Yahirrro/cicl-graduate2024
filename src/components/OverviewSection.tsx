@@ -66,6 +66,7 @@ const overviewSectionStyles = sva({
       fontSize: "14px",
       fontWeight: "800",
       mb: "32px",
+      fontStyle: "normal",
     },
     text: {
       fontSize: "17px",

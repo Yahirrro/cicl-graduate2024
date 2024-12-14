@@ -3,7 +3,7 @@ import { defineConfig, defineGlobalStyles } from "@pandacss/dev";
 const globalCss = defineGlobalStyles({
   "*": {
     fontFamily:
-      "var(--font-basically-a-sans-serif), Aoto Gothic Regular, Noto Sans JP",
+      "var(--font-basically-a-sans-serif), Aoto Gothic Regular, var(--font-noto-sans-jp), sans-serif",
     fontFeatureSettings: '"palt" on',
     fontStyle: "normal",
   },
@@ -25,6 +25,16 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      keyframes: {
+        flashIn: {
+          from: {
+            filter: "brightness(1.1)",
+          },
+          to: {
+            filter: "brightness(1)",
+          },
+        },
+      },
       tokens: {
         fontSizes: {
           extraSmall: {

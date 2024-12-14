@@ -6,12 +6,13 @@ import { TopSection } from "@/components/TopSection";
 import { VisualViewer } from "@/components/VisualViewer";
 import { css } from "../../styled-system/css";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
+import { TopPageContainer } from "@/components/TopPageContainer";
 
 export const runtime = "edge";
 
 export default function Home() {
   return (
-    <div>
+    <TopPageContainer>
       <LoadingAnimation />
 
       <TopSection>
@@ -28,6 +29,6 @@ export default function Home() {
         <OverviewSection />
         <Footer />
       </div>
-    </div>
+    </TopPageContainer>
   );
 }

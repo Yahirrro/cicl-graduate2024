@@ -1,4 +1,5 @@
 import { sva } from "../../styled-system/css";
+import { CountDownSectionNumber } from "./CountdownSectionNumber";
 
 const countDownSectionStyles = sva({
   slots: ["container", "countdownTitle", "countdownText"],
@@ -48,19 +49,13 @@ const countDownSectionStyles = sva({
     countdownText: {
       gridColumn: "5 / span 1",
       fontSize: "20px",
-      "& span": {
-        pr: "8px",
-        fontSize: "110px",
-        mdDown: {
-          fontSize: "80px",
-          lineHeight: "1",
-          height: "80px",
-        },
-      },
+      overflow: "hidden",
+      height: "110px",
       mdDown: {
         gridColumn: "span 1",
         lineHeight: "1",
         textAlign: "center",
+        height: "80px",
       },
     },
   },
@@ -75,11 +70,15 @@ export const CountDownSection: React.FC = () => {
   const diff = targetDate.getTime() - now.getTime();
   const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
+  // diff daysを10の位と1の位に分割
+  const tensDigit = Math.floor(diffDays / 10);
+  const onesDigit = diffDays % 10;
+
   return (
     <section className={style.container}>
       <h2 className={style.countdownTitle}>卒業制作展まであと</h2>
       <p className={style.countdownText}>
-        <span>{diffDays}</span>日
+        <CountDownSectionNumber tensDigit={tensDigit} onesDigit={onesDigit} />
       </p>
     </section>
   );

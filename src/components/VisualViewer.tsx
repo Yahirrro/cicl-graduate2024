@@ -43,11 +43,19 @@ export const VisualViewer: React.FC = () => {
   return (
     <motion.div
       className={style}
-      initial={{ scale: 1.2 }}
+      initial={{ scale: 1.2, filter: "blur(30px)" }}
       animate={{
         scale: 1,
+        filter: "blur(0px)",
       }}
-      transition={{ delay: 2.5, duration: 5 }}
+      transition={{
+        delay: 2.5,
+        duration: 5,
+        filter: {
+          duration: 1,
+          delay: 2.5,
+        },
+      }}
     >
       <iframe
         src="/assets/p5.html"

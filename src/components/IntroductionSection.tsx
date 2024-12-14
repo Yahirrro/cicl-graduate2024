@@ -70,14 +70,14 @@ export const IntroductionSection: React.FC = () => {
   const style = introductionSectionStyles();
   return (
     <section className={style.container}>
-      <FadeInInView className={style.introductionContainer}>
-        <h2
-          className={style.introductionTitle}
-        >{`CI/CLらしい\n「学びと制作」の\n集大成。`}</h2>
-        <p
-          className={style.introductionText}
-        >{`わたしたちは日夜、研究と実験を繰り返しています。 それは、 制作や実践を伝える手引きとなる、展開図を作る作業にも似ています。 展開図は、組み立てるための説明や試行の軌跡であり、 組み立てたものを紐解くための解説でもあるからです。その中には、それぞれが見つけたゴールと、 生み出した方法があります。その多様さこそが、 わたしたちの特徴です。 本年度の卒業・修了展のテーマは「展開図」それはわたしたちの軌跡であり、 これからの道標。 それぞれの新しい未来と、 今への眼差しを是非ともお楽しみください。(仮テキスト)`}</p>
-      </FadeInInView>
+      <div className={style.introductionContainer}>
+        <FadeInInView className={style.introductionTitle} delay={0}>
+          <h2>{`CI/CLらしい\n「学びと制作」の\n集大成。`}</h2>
+        </FadeInInView>
+        <FadeInInView className={style.introductionText} delay={0.8}>
+          <p>{`わたしたちは日夜、研究と実験を繰り返しています。 それは、 制作や実践を伝える手引きとなる、展開図を作る作業にも似ています。 展開図は、組み立てるための説明や試行の軌跡であり、 組み立てたものを紐解くための解説でもあるからです。その中には、それぞれが見つけたゴールと、 生み出した方法があります。その多様さこそが、 わたしたちの特徴です。 本年度の卒業・修了展のテーマは「展開図」それはわたしたちの軌跡であり、 これからの道標。 それぞれの新しい未来と、 今への眼差しを是非ともお楽しみください。(仮テキスト)`}</p>
+        </FadeInInView>
+      </div>
       <IntroductionImages />
     </section>
   );

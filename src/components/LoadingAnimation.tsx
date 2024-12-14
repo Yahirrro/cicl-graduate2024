@@ -3,12 +3,7 @@
 import { motion } from "framer-motion";
 import { useIsLoaded } from "@/app/hooks/useIsLoaded";
 
-const text = [
-  "CREATIVE INNOVATION",
-  "CREATIVE READERSHIP COURSE",
-  "DEGREE SHOW",
-  "2025",
-];
+const text = ["INSTITUTE-OF-INNOVATION", "GRADUATE-SHOW", "2025"];
 
 export const LoadingAnimation: React.FC = () => {
   const isLoaded = useIsLoaded();
@@ -61,7 +56,7 @@ export const LoadingAnimation: React.FC = () => {
           justifyContent: "center",
           alignItems: "flex-start",
           flexDirection: "column",
-          gap: "1rem",
+          gap: "0.7rem",
         }}
       >
         {text.map((t, i) => (

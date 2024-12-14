@@ -5,15 +5,25 @@ export const useIsLoaded = () => {
 
   useEffect(() => {
     const handleLoad = () => {
-      setIsLoaded(true);
+      if (!isLoaded) {
+        setIsLoaded(true);
+        clearTimeout(timeout);
+      }
     };
+
+    const timeout = setTimeout(() => {
+      if (!isLoaded) {
+        setIsLoaded(true);
+      }
+    }, 5000);
 
     window.addEventListener("load", handleLoad);
 
     return () => {
       window.removeEventListener("load", handleLoad);
+      clearTimeout(timeout);
     };
-  }, []);
+  }, [isLoaded]);
 
   return isLoaded;
 };
