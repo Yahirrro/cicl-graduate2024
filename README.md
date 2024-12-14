@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 武蔵野美術大学 Institute of Innovation 卒業・修了展 2024
+
+![Screenshots](https://github.com/user-attachments/assets/5c007379-998e-4bad-b9d9-20ab3d16418f)
+
+このプロジェクトは、2025年1月に行われる武蔵野美術大学 Institute of Innovation 卒業・修了展のためのWebサイトのソースコードです。このWebサイトは、Next.js (App Router), Panda CSS, Framer motion等を用いて制作され、Cloudflare Pagesにてデプロイされています。
+
+プロジェクトのコードはMITライセンスを主体としています。今後の卒展サイト開発等のために参考にしていただければ幸いです。
 
 ## Getting Started
 
@@ -28,9 +34,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
