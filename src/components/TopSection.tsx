@@ -30,7 +30,7 @@ const topSectionStyles = sva({
 
       mdDown: {
         height: "100svh",
-        px: "24px",
+        px: "32px",
         pt: "32px",
         pb: "32px",
         gridTemplateColumns: "repeat(2, 1fr)",
