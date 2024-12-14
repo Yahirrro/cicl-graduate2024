@@ -33,8 +33,6 @@ const countDownSectionStyles = sva({
       "& span": {
         pr: "8px",
         fontSize: "110px",
-        fontFamily: '"classico-urw"',
-        letterSpacing: "-0.1em",
       },
     },
   },

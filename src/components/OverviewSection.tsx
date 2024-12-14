@@ -47,10 +47,9 @@ const overviewSectionStyles = sva({
       height: "fit-content",
     },
     title: {
-      fontSize: "16px",
-      fontFamily: '"classico-urw"',
-      fontWeight: "500",
-      mb: "42px",
+      fontSize: "14px",
+      fontWeight: "800",
+      mb: "32px",
     },
     text: {
       fontSize: "17px",
@@ -82,7 +81,7 @@ const overviewSectionStyles = sva({
         display: "block",
       },
       "& span:nth-of-type(2)": {
-        transform: "rotate(45deg)",
+        transform: "rotate(-45deg)",
       },
     },
   },

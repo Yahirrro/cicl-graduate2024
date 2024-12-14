@@ -2,7 +2,8 @@ import { defineConfig, defineGlobalStyles } from "@pandacss/dev";
 
 const globalCss = defineGlobalStyles({
   "*": {
-    fontFamily: 'var(--font-satoshi-variable), "FOT-DNP ShueiGoKinStd"',
+    fontFamily:
+      "var(--font-basically-a-sans-serif), Aoto Gothic Regular, Noto Sans JP",
     fontFeatureSettings: '"palt" on',
     fontStyle: "normal",
   },
@@ -38,24 +39,20 @@ export default defineConfig({
         extraSmall: {
           value: {
             fontSize: "extraSmall",
-            fontFamily:
-              'var(--font-satoshi-variable), "dnp-shuei-gothic-kin-std"',
             fontStyle: "normal",
             fontWeight: 470,
             lineHeight: "125% /* 15px */",
-            letterSpacing: "0.24px",
+            letterSpacing: "0.05rem",
             textTransform: "uppercase",
           },
         },
         small: {
           value: {
             fontSize: "small",
-            fontFamily:
-              'var(--font-satoshi-variable), "dnp-shuei-gothic-kin-std"',
             fontStyle: "normal",
             fontWeight: 470,
             lineHeight: "125% /* 15px */",
-            letterSpacing: "0.24px",
+            letterSpacing: "0.05rem",
             textTransform: "uppercase",
           },
         },

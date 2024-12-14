@@ -127,10 +127,19 @@ export const Footer: React.FC = () => {
           <p
             className={cx(style.text, style.textUppercase, style.opacity50)}
           >{`©︎ Musashino Art University`}</p>
-          <p
-            className={cx(style.text, style.opacity50)}
-          >{`WebサイトのコードはCC by CC BY 4.0のライセンス条件(コモンズ証 - 表示 4.0 国際 - Creative Commons)のもと、GitHubにて公開されています。`}</p>
-          <Link href={"/"} className={style.mauLogoContainer}>
+          <p className={cx(style.text, style.opacity50)}>
+            <Link
+              href={"https://github.com/Yahirrro/cicl-graduate2024"}
+              target="_blank"
+            >
+              {`WebサイトのコードはMITライセンスおよび、CC by CC BY 4.0のライセンス条件(コモンズ証 - 表示 4.0 国際 - Creative Commons)のもと、GitHubにて公開されています。`}
+            </Link>
+          </p>
+          <Link
+            href={"https://www.musabi.ac.jp"}
+            target="_blank"
+            className={style.mauLogoContainer}
+          >
             <svg
               width="79"
               height="25"

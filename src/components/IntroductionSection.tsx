@@ -17,7 +17,7 @@ const introductionSectionStyles = sva({
       px: "72px",
       pt: "92px",
       pb: "128px",
-      maxWidth: "1980px",
+      maxWidth: "1920px",
       mx: "auto",
       color: "rgba(0, 4, 128, 1)",
     },
@@ -30,9 +30,13 @@ const introductionSectionStyles = sva({
     },
     introductionTitle: {
       gridColumn: "1 / span 3",
-      fontSize: "64px",
+      fontSize: "52px",
       whiteSpace: "pre-line",
       fontWeight: "500",
+      fontFamily:
+        "var(--font-basically-a-sans-serif), Aoto Gothic Medium, Noto Sans JP",
+      fontFeatureSettings: '"palt" on',
+      letterSpacing: "-0.04em",
     },
     introductionText: {
       gridColumn: "4 / span 2",

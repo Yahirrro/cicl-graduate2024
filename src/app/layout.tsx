@@ -2,11 +2,30 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import TypekitLoader from "@/components/TypekitLoader";
+import Script from "next/script";
+import { TypeSquareLoader } from "@/components/TypeSquareLoader";
+import { css, cx } from "../../styled-system/css";
 
 const satoshi = localFont({
   src: "./fonts/Satoshi-Variable.ttf",
   variable: "--font-satoshi-variable",
   weight: "470 500",
+});
+//BasicallyASansSerif
+const basicallyASansSerif = localFont({
+  variable: "--font-basically-a-sans-serif",
+  src: [
+    {
+      path: "./fonts/BasicallyASansSerif-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/BasicallyASansSerif-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -20,10 +39,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${satoshi.variable}`}>
+    <html lang="ja">
+      <body
+        className={cx(
+          css({
+            background: "rgba(5, 7, 64, 1)",
+          }),
+          `${satoshi.variable} ${basicallyASansSerif.variable}`
+        )}
+      >
         {children}
-        <TypekitLoader />
+        <TypeSquareLoader />
       </body>
     </html>
   );

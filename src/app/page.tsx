@@ -4,18 +4,30 @@ import { IntroductionSection } from "@/components/IntroductionSection";
 import { OverviewSection } from "@/components/OverviewSection";
 import { TopSection } from "@/components/TopSection";
 import { VisualViewer } from "@/components/VisualViewer";
+import { css } from "../../styled-system/css";
+import { LoadingAnimation } from "@/components/LoadingAnimation";
 
 export const runtime = "edge";
 
 export default function Home() {
   return (
     <div>
-      <TopSection />
-      <VisualViewer />
-      <IntroductionSection />
-      <CountDownSection />
-      <OverviewSection />
-      <Footer />
+      <LoadingAnimation />
+
+      <TopSection>
+        <VisualViewer />
+      </TopSection>
+
+      <div
+        className={css({
+          bg: "white",
+        })}
+      >
+        <IntroductionSection />
+        <CountDownSection />
+        <OverviewSection />
+        <Footer />
+      </div>
     </div>
   );
 }

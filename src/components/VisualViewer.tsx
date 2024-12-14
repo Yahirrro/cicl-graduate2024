@@ -1,9 +1,11 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { cva } from "../../styled-system/css";
 
 const visualViewerStyle = cva({
   base: {
     position: "relative",
-    aspectRatio: "16 / 9",
     width: "100%",
     height: "100%",
     background: "rgba(5, 7, 64, 1)",
@@ -32,7 +34,14 @@ const visualViewerStyle = cva({
 export const VisualViewer: React.FC = () => {
   const style = visualViewerStyle();
   return (
-    <div className={style}>
+    <motion.div
+      className={style}
+      initial={{ scale: 1.2 }}
+      animate={{
+        scale: 1,
+      }}
+      transition={{ delay: 2.5, duration: 3 }}
+    >
       <iframe
         src="/assets/p5.html"
         width="100%"
@@ -40,6 +49,6 @@ export const VisualViewer: React.FC = () => {
         frameBorder="0"
         scrolling="no"
       />
-    </div>
+    </motion.div>
   );
 };
