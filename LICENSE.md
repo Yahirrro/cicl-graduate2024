@@ -39,9 +39,3 @@ This project includes certain files and directories that are licensed under diff
 ---
 
 For any questions or clarifications regarding the licenses, please refer to the respective LICENSE files in the specified directories or contact the project maintainer.
-
----
-
-## Directory Structure
-
-To ensure clarity and proper license attribution, the project is organized as follows:
