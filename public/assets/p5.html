@@ -14,106 +14,508 @@
   </head>
   <body>
     <script>
-      let agentCount = 1000;
-      let overlayAlpha = 10; // 背景フェードを少し強く
-      let strokeWidth = 1.0;
-      let minus, plus;
-      let agents = [];
-      let pg;
+
+      // デバッグモード : パスの線も描画する
+      let isDebugMode = false;
+
+      // 線の多さ
+      let lineRatio = 1.2;
+
+      // ラインのランダムの範囲
+      let lineRange = 10;
+
+      // 線の色
+      let lineColer = { r: 190, g: 190, b: 190 };
+
+      // 線の太さ
+      let lineWeight = 0.9;
+
+      // 線の長さ
+      let lineLength = 2.0;
+
+      let lineSpeed = { min: 0.0005, max: 0.0010 };
+
+      // 曲線の滑らかさ
+      let resolution = 100;
+
+      // Canvassize : イラレのアートボードも揃える必要あり
+      let canvasSize = { h: 1080, w: 1920 };
+
+      // jsonデータからの位置調整
+      let jsonData = { name: "1210-2-convert.json", diffX: -3830, diffY: -4400, scaler: 5.0 };
+
+      let allSegments;
+      let segmentPoints = [];
+      let pointSets = [];
+      let segmentsIds = [];
+      let lines = [];
+      let lineLen = [];
+
+      function preload() {
+        loadJSON(jsonData.name, function (data) {
+          allSegments = data;
+        });
+      }
+
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
 
       function setup() {
-        createCanvas(windowWidth, windowHeight);
-        smooth(); // メインキャンバスのアンチエイリアスを有効化
-        pg = createGraphics(windowWidth, windowHeight);
-        pg.smooth(); // グラフィックバッファのアンチエイリアスを有効化
-        colorMode(RGB, 255);
-        minus = createVector(width * 0.75, height * 0.25); // 右上
-        plus = createVector(width * 0.25, height * 0.75); // 左下
+        frameRate(30);
+        // レコーディングを繰り返しても同じ出力結果になるようにrandomSeedを設定
+        randomSeed(0);
 
-        for (let i = 0; i < agentCount; i++) {
-          agents.push(new Agent());
+        createCanvas(windowWidth, windowHeight);
+        noFill();
+
+        drawBezier();
+        pixelDensity(2);
+        segmentPoints.forEach((segments, index) => {
+          var len = getTotalBezierLength(segments, resolution);
+          var numLines = (int)((len / 7) * lineRatio);
+          let setLines = [];
+
+
+          for (let i = 0; i < numLines; i++) {
+            setLines.push({
+              t: random(0, 1),
+              // 長い方が早い
+              // lineSpeed: random(lineSpeed.min, lineSpeed.max), // 移動速度
+              // 短い方が早い
+              lineSpeed: 600 * random(lineSpeed.min, lineSpeed.max) / len, // 移動速度        
+              randX: random(-lineRange, lineRange), // 初期揺らぎX
+              randY: random(-lineRange, lineRange)  // 初期揺らぎY
+            });
+          }
+          lines.push(setLines);
+        });
+        beginShape(); // すべてのセグメントを1つの形状として描画
+      }
+
+      function drawBezier() {
+
+        for (let segments of allSegments) {
+          // ベジエ曲線をセグメント単位で描画
+
+          if (isDebugMode) {
+            // 各セグメントの制御点を描画（確認用）
+            stroke(0);
+            fill(255, 0, 0); // 制御点は赤で表示
+            for (let segment of segments.segments) {
+              for (let i = 0; i < segment.length; i++) {
+                ellipse(segment[i].x, segment[i].y, 10, 10); // 制御点を円で描画
+                textAlign(CENTER, CENTER);
+                textSize(12);
+                text(`(${i})`, segment[i].x, segment[i].y - 15); // 制御点のインデックスを表示
+              }
+            }
+          }
+          stroke(255, 0, 0); // ベジエ曲線は赤で描画
+          noFill();
+
+          let updatedSegments = reorderSegmentsByY(segments.segments);
+
+          if (segments.forceReverse) {
+            updatedSegments = forceReorderSegments(updatedSegments);
+          }
+
+          if (segments.segments.length == 1) {
+            updatedSegments = reorderSegmentsByProximity(updatedSegments);
+          }
+
+          var len = getTotalBezierLength(segments.segments, resolution);
+
+          if (segments.segments.length != 3) {
+            segmentPoints.push(updatedSegments);
+            drawHighOrderBezier(updatedSegments);
+            segmentsIds.push(segments.name);
+            lineLen.push(len);
+          }
         }
       }
 
       function draw() {
-        background(255);
+        background(0, 22, 37);
 
-        // グラフィックバッファに描画
-        pg.colorMode(RGB, 255);
-        pg.noStroke();
-        pg.fill(0, 0, 0, overlayAlpha); // 軌跡を残すための透明な背景
-        pg.rect(0, 0, pg.width, pg.height);
+        if (isDebugMode) {
+          segmentPoints.forEach((segments, index) => {
+            // 各セグメントの制御点を描画（確認用）
+            stroke(255, 0, 0);
+            // fill(255, 0, 0); // 制御点は赤で表示
+            for (let segment of segments) {
+              for (let i = 0; i < segment.length; i++) {
 
-        // エージェントの描画
-        pg.stroke(255, 255, 255, 100); // 軌跡の透明度を強く
-        for (let i = 0; i < agents.length; i++) {
-          agents[i].update(pg, strokeWidth);
+                if (i == 0) {
+                  ellipse(segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY, 10, 10); // 制御点を円で描画
+                  text(`(${i}) ${segmentsIds[index]}`, segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY - 15); // 制御点のインデックスを表示
+                }
+                else if (i == segment.length - 1) {
+                  {
+                    ellipse(segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY, 10, 10); // 制御点を円で描画
+                    text(`(${i}) ${segmentsIds[index]}`, segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY - 15); // 制御点のインデックスを表示
+                  }
+                }
+                textAlign(CENTER, CENTER);
+                textSize(12);
+              }
+            }
+          });
         }
 
-        // 描画結果を画面に表示
-        image(pg, 0, 0);
-      }
+        segmentPoints.forEach((points, index) => {
 
-      class Agent {
-        constructor() {
-          this.vector = createVector(random(width), random(height));
-          this.vectorOld = this.vector.copy();
-          this.stepSize = random(1, 5);
-          this.ttl = 30 + random(100);
-          this.strokeAlpha = 255; // 初期の透明度
-        }
-
-        update(pg, strokeWidth) {
-          this.ttl--;
-
-          let k_p = 150.0 / max(5, distance2(this.vector, plus));
-          let k_m = -150.0 / max(5, distance2(this.vector, minus));
-
-          this.vector.x += k_p * (this.vector.x - plus.x);
-          this.vector.x += k_m * (this.vector.x - minus.x);
-          this.vector.y += k_p * (this.vector.y - plus.y);
-          this.vector.y += k_m * (this.vector.y - minus.y);
-
-          let isOutside =
-            this.vector.x < 0 ||
-            this.vector.x > width ||
-            this.vector.y < 0 ||
-            this.vector.y > height;
-
-          if (isOutside || this.ttl < 0) {
-            let x = width * random(100) * 0.01;
-            let y = height * random(100) * 0.01;
-            this.ttl = 50 + random(30);
-            this.vector.set(x, y);
-            this.vectorOld = this.vector.copy();
-            this.strokeAlpha = 255; // リセット時に透明度を初期化
+          if (isDebugMode) {
+            drawHighOrderBezier(points);
           }
 
-          pg.stroke(255, 255, 255, this.strokeAlpha);
-          pg.strokeWeight(strokeWidth);
-          pg.line(
-            this.vectorOld.x,
-            this.vectorOld.y,
-            this.vector.x,
-            this.vector.y
-          );
-          this.vectorOld = this.vector.copy();
-          this.strokeAlpha = max(0, this.strokeAlpha - 1); // 下限を0に設定
+          lines[index].forEach((lineData) => {
+
+            lineData.t += lineData.lineSpeed;
+
+            if (lineData.t > 1) {
+
+              lineData.t = 0; // ループさせる
+              // 終点到達時に新しい揺らぎを生成
+              lineData.randX = random(-lineRange, lineRange);
+              lineData.randY = random(-lineRange, lineRange);
+            }
+
+            var segLen = points.length;
+            var setSegmentId = getSegmentIndex(points, lineData.t);
+            var tVal = lineData.t;
+
+            switch (setSegmentId) {
+              case 0:
+                if (2 <= segLen) {
+                  tVal = map(lineData.t, 0, 0.5, 0, 1);
+                }
+                break;
+              case 1:
+                tVal = map(lineData.t, 0.5, 1, 0, 1);
+                break;
+              case 2:
+                tVal = lineData.t;
+                break;
+            }
+
+            let { x, y } = bezierPointHighOrder(tVal, points[setSegmentId]);
+
+            let { dx, dy } = bezierTangentHighOrder(tVal, points[setSegmentId]);
+
+            var range = proximityPeak(lineData.t, 0.02, 0.98);
+            x += lineData.randX * range;
+            y += lineData.randY * range;
+
+            // 接線ベクトルを単位ベクトルに変換
+            let mag = sqrt(dx * dx + dy * dy);
+            let unitDx = dx / mag;
+            let unitDy = dy / mag;
+
+            // 線の始点と終点を計算
+            let startX = x - unitDx * lineLength / 2;
+            let startY = y - unitDy * lineLength / 2;
+            let endX = x + unitDx * lineLength / 2;
+            let endY = y + unitDy * lineLength / 2;
+
+            stroke(lineColer.r, lineColer.g, lineColer.b);
+
+            var scalerX = windowWidth / canvasSize.w;
+            var scalerY = windowHeight / canvasSize.h;
+            var lineW = constrain(lineWeight * scalerY, 0.9, 2.0);
+            strokeWeight(lineW);
+
+            var scaler = constrain(scalerX, 0.5, 2.5);
+            var width = windowWidth / scaler;
+            var height = windowHeight / scaler;
+            var x1 = ((startX * jsonData.scaler + jsonData.diffX) + (width / 2 - canvasSize.w / 2)) * scaler;
+            var y1 = ((startY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler;
+            var x2 = ((endX * jsonData.scaler + jsonData.diffX) + (width / 2 - canvasSize.w / 2)) * scaler;
+            var y2 = ((endY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler;
+            // エリア外は非表示にして負荷低減
+            var isInArea1 = (0 <= x1 && 0 <= y1) || (0 <= x2 && 0 <= y2);
+            var isInArea2 = (x1 <= width && y1 <= height) || (x2 <= windowWidth && y2 <= windowHeight);
+            if (isInArea1 && isInArea2)
+              line(x1, y1, x2, y2);
+          });
+        });
+      }
+
+      function proximityPeak(t, min, max) {
+        // t が 0 ～ 1 の範囲にあることを保証する（念のため）
+        t = constrain(t, 0, 1);
+
+        // 範囲外の場合は 0 を返す
+        if (t <= min || t >= max) {
+          return 0;
         }
+
+        // 範囲内で値を徐々に変化させる
+        let center = (min + max) / 2; // 中心点
+        let range = (max - min) / 2; // 範囲の半分
+
+        // 中心からの距離を正規化（範囲内で0～1）
+        let distanceFromCenter = Math.abs(t - center) / range;
+
+        // 中心に近いほど 1、端に近いほど 0
+        return 1 - distanceFromCenter;
       }
 
-      function distance2(v1, v2) {
-        return (v2.x - v1.x) ** 2 + (v2.y - v1.y) ** 2;
+      // 高次ベジエ曲線の座標計算
+      function bezierPointHighOrder(t, points) {
+        let x = 0;
+        let y = 0;
+        let n = points.length - 1; // 制御点の数 - 1
+        for (let i = 0; i <= n; i++) {
+          let binomial = factorial(n) / (factorial(i) * factorial(n - i));
+          let coeff = binomial * pow(1 - t, n - i) * pow(t, i);
+          x += coeff * points[i].x;
+          y += coeff * points[i].y;
+        }
+        return { x, y };
       }
 
-      // ウィンドウサイズ変更時にキャンバスとバッファのサイズを更新
-      function windowResized() {
-        resizeCanvas(windowWidth, windowHeight);
-        pg = createGraphics(windowWidth, windowHeight);
-        pg.smooth(); // リサイズ時もアンチエイリアスを有効化
-        minus = createVector(width * 0.75, height * 0.25);
-        plus = createVector(width * 0.25, height * 0.75);
+      // 高次ベジエ曲線の接線ベクトル計算
+      function bezierTangentHighOrder(t, points) {
+        let dx = 0;
+        let dy = 0;
+        let n = points.length - 1; // 制御点の数 - 1
+        for (let i = 0; i <= n - 1; i++) {
+          let binomial = factorial(n - 1) / (factorial(i) * factorial(n - 1 - i));
+          let coeff = binomial * pow(1 - t, n - 1 - i) * pow(t, i);
+          dx += coeff * (points[i + 1].x - points[i].x);
+          dy += coeff * (points[i + 1].y - points[i].y);
+        }
+        return { dx, dy };
+      }
+
+      // 階乗計算
+      function factorial(n) {
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);
+      }
+
+      // センターラインを描画
+      function centerLine(width, height) {
+        stroke(0);
+        beginShape();
+        vertex(width, 0);
+        vertex(0, height);
+        endShape();
+        beginShape();
+        vertex(0, 0);
+        vertex(width, height);
+        endShape();
+      }
+
+      // セグメント単位で高次ベジエ曲線を描画
+      function drawHighOrderBezier(segments) {
+
+        beginShape(); // すべてのセグメントを1つの形状として描画
+        for (let segment of segments) {
+          for (let t = 0; t <= 1; t += 1 / 100) {
+            let point = bezierPointForSegment(t, segment);
+            if (isDebugMode) {
+              stroke(200);
+              vertex(point.x * jsonData.scaler + jsonData.diffX, point.y * jsonData.scaler + jsonData.diffY);
+            }
+          }
+        }
+        endShape(); // 形状を終了
+      }
+
+      // セグメントを高次ベジエ曲線の制御点リストに変換
+      function convertSegmentsToHighOrderPoints(segments) {
+        let highOrderPoints = [segments[0][0]]; // 始点を追加
+
+        segments.forEach((segment, index) => {
+          if (index > 0) {
+            // 連続するセグメントの始点をスキップ
+            highOrderPoints.push(segment[1]); // 制御点1
+          }
+          highOrderPoints.push(segment[2]); // 制御点2
+          highOrderPoints.push(segment[3]); // 終点
+        });
+
+        return highOrderPoints;
+      }
+
+      // セグメントごとの高次ベジエ曲線の点を計算
+      function bezierPointForSegment(t, segment) {
+        let p0 = segment[0];
+        let p1 = segment[1];
+        let p2 = segment[2];
+        let p3 = segment[3];
+
+        let x = pow(1 - t, 3) * p0.x +
+          3 * pow(1 - t, 2) * t * p1.x +
+          3 * (1 - t) * pow(t, 2) * p2.x +
+          pow(t, 3) * p3.x;
+
+        let y = pow(1 - t, 3) * p0.y +
+          3 * pow(1 - t, 2) * t * p1.y +
+          3 * (1 - t) * pow(t, 2) * p2.y +
+          pow(t, 3) * p3.y;
+
+        return { x, y };
+      }
+
+      function factorial(n) {
+        if (n <= 1) return 1;
+        return n * factorial(n - 1);
+      }
+
+      function getBezierSegmentLength(segment, resolution) {
+        let length = 0;
+        let prevPoint = bezierPointForSegment(0, segment); // t=0 の点
+
+        for (let t = 1 / resolution; t <= 1; t += 1 / resolution) {
+          let currPoint = bezierPointForSegment(t, segment); // tの現在の点
+          // 現在の点と前の点の間の距離を計算
+          let dx = currPoint.x - prevPoint.x;
+          let dy = currPoint.y - prevPoint.y;
+          length += sqrt(dx * dx + dy * dy); // 距離を長さに加算
+          prevPoint = currPoint; // 現在の点を次のループの前の点に設定
+        }
+
+        return length; // 曲線の長さを返す
+      }
+
+      // すべてのセグメントセットの長さを計算する関数
+      function getTotalBezierLength(segments, resolution) {
+        let totalLength = 0;
+
+        segments.forEach(segment => {
+          totalLength += getBezierSegmentLength(segment, resolution);
+        });
+
+        return totalLength; // 合計の長さを返す
+      }
+
+      function forceReorderSegments(segments) {
+        // セグメントの長さによる分岐
+        if (segments.length === 1) {
+          return segments.map(segment => segment.reverse());
+
+        } else if (segments.length === 2 || segments.length === 3) {
+          // 長さが2または3の場合、最初と最後のセグメントを比較
+          const firstPoint = segments[0][0];
+          return segments.reverse().map(segment => segment.reverse());
+        }
+
+        // リバース不要の場合、そのまま返す
+        return segments;
+      }
+
+      function reorderSegmentsByY(segments) {
+        // セグメントの長さによる分岐
+        if (segments.length === 1) {
+          // 長さが1の場合、最初と最後の点は同一セグメント内
+          const firstPoint = segments[0][0];
+          const lastPoint = segments[0][segments[0].length - 1];
+
+          if (lastPoint.y > firstPoint.y) {
+            // 最後の点の `y` が大きい場合、セグメント内の点をリバース
+            return segments.map(segment => segment.reverse());
+          }
+        } else if (segments.length === 2 || segments.length === 3) {
+          // 長さが2または3の場合、最初と最後のセグメントを比較
+          const firstPoint = segments[0][0];
+          const lastPoint = segments[segments.length - 1][segments[segments.length - 1].length - 1];
+
+          if (lastPoint.y > firstPoint.y) {
+            // 最後の点の `y` が大きい場合、セグメント全体をリバース
+            return segments.reverse().map(segment => segment.reverse());
+          }
+        }
+
+        // リバース不要の場合、そのまま返す
+        return segments;
+      }
+
+      function reorderSegmentsByProximity(segments) {
+        // 距離を計算する関数
+        function calculateDistance(x1, y1, x2, y2) {
+          return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        }
+
+        // ターゲットポイント
+        // 2K
+        const startTarget = { x: 1030, y: 935 };
+        const endTarget = { x: 970, y: 1050 };
+
+        const startTarget1 = { x: 993, y: 1067 };
+        const endTarget1 = { x: 1034, y: 989 };
+        // 4K
+        // const startTarget = { x: 2050, y: 1900 };
+        // const endTarget = { x: 1960, y: 2090 };
+
+        // 最初と最後のポイントを取得
+        const firstPoint = segments[0][0];
+        const lastPoint = segments[segments.length - 1][segments[segments.length - 1].length - 1];
+
+        // ターゲットポイントとの距離を計算
+        const distanceToStartTarget = calculateDistance(firstPoint.x, firstPoint.y, startTarget.x, startTarget.y);
+        const distanceToEndTarget = calculateDistance(lastPoint.x, lastPoint.y, endTarget.x, endTarget.y);
+
+        const distanceToStartTarget1 = calculateDistance(firstPoint.x, firstPoint.y, startTarget1.x, startTarget1.y);
+        const distanceToEndTarget1 = calculateDistance(lastPoint.x, lastPoint.y, endTarget1.x, endTarget1.y);
+
+        const distanceToStartTarget2 = calculateDistance(firstPoint.x, firstPoint.y, endTarget1.x, endTarget1.y);
+        const distanceToEndTarget2 = calculateDistance(lastPoint.x, lastPoint.y, startTarget1.x, startTarget1.y);
+
+
+        var distanceLevel = 10;
+        if (distanceToStartTarget1 < distanceLevel) {
+          segments[0][0] = startTarget1;
+        }
+        else if (distanceToEndTarget1 < distanceLevel) {
+          segments[segments.length - 1][segments[segments.length - 1].length - 1] = endTarget1;
+        }
+
+        else if (distanceToStartTarget2 < distanceLevel) {
+          segments[0][0] = endTarget1;
+        }
+        else if (distanceToEndTarget2 < distanceLevel) {
+          segments[segments.length - 1][segments[segments.length - 1].length - 1] = startTarget1;
+        }
+
+        // 条件:
+        // 1. 最後のポイントがターゲットの終点に近く、最初のポイントがターゲットの始点から遠い
+        // 2. 最初のポイントがターゲットの始点に近く、最後のポイントがターゲットの終点から遠い
+        var near = 50;
+        var far = 80;
+
+        // var near = 100;
+        // var far = 160;
+        if (distanceToEndTarget < near && distanceToStartTarget > far) {
+          // 条件1に該当: 反転
+          return segments.reverse().map(segment => segment.reverse());
+        } else if (distanceToStartTarget < near && distanceToEndTarget > far) {
+          // 条件2に該当: 順序維持
+          return segments.reverse().map(segment => segment.reverse());
+        }
+
+        // 条件に該当しない場合、そのまま返す
+        return segments;
+      }
+
+      function getSegmentIndex(segmentPoints, t) {
+        let numSegments = segmentPoints.length; // セグメント数を計算
+        if (numSegments <= 0) return 0; // セグメントが1つ以下なら0を返す
+
+        let segmentSize = 1 / numSegments; // 各セグメントの範囲サイズ
+
+        // t の範囲に応じたインデックスを返す
+        for (let i = 0; i < numSegments; i++) {
+          // console.log(`Checking segment ${i}: range [${i * segmentSize}, ${(i + 1) * segmentSize}]`);
+          if (t <= (i + 1) * segmentSize) {
+            return i;
+          }
+        }
+        return numSegments - 1; // 最後のセグメントを返す
       }
     </script>
   </body>
+
 </html>
