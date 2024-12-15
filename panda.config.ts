@@ -73,5 +73,5 @@ export default defineConfig({
   globalCss,
 
   // The output directory for your css system
-  outdir: "styled-system",
+  jsxFramework: "react",
 });

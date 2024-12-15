@@ -4,11 +4,17 @@ import { IntroductionSection } from "@/components/IntroductionSection";
 import { OverviewSection } from "@/components/OverviewSection";
 import { TopSection } from "@/components/TopSection";
 import { VisualViewer } from "@/components/VisualViewer";
-import { css } from "../../styled-system/css";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
 import { TopPageContainer } from "@/components/TopPageContainer";
+import { styled } from "../../styled-system/jsx";
 
 export const runtime = "edge";
+
+const BgWhite = styled("div", {
+  base: {
+    bg: "white",
+  },
+});
 
 export default function Home() {
   return (
@@ -19,16 +25,12 @@ export default function Home() {
         <VisualViewer />
       </TopSection>
 
-      <div
-        className={css({
-          bg: "white",
-        })}
-      >
+      <BgWhite>
         <IntroductionSection />
         <CountDownSection />
         <OverviewSection />
         <Footer />
-      </div>
+      </BgWhite>
     </TopPageContainer>
   );
 }

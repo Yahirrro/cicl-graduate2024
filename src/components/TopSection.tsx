@@ -1,4 +1,5 @@
 import { css, cx, sva } from "../../styled-system/css";
+import { TopSectionInnerLink } from "./TopSectionInnerLink";
 import { FadeIn } from "./util/FadeIn";
 
 const topSectionStyles = sva({
@@ -121,6 +122,7 @@ const topSectionStyles = sva({
       height: "fit-content",
       width: "fit-content",
       textStyle: "small",
+      cursor: "pointer",
     },
 
     topVisualContainer: {
@@ -181,12 +183,10 @@ export const TopSection: React.FC<{
         >
           {`ICHIGAYA CAMPUS,\nMUSASHINO ART UNIV.`}
         </p>
-        <p className={style.topInfoContainerText}>{`2024/01/02 - 01/21`}</p>
+        <p className={style.topInfoContainerText}>{`2024/01/31 - 02/02`}</p>
         <p className={style.topInfoContainerText}>{`10:00 - 20:00 OPEN`}</p>
         <div className={style.topInfoLinkContainer}>
-          <a className={style.topInfoLink}>
-            ACCESS & OVERVIEW<span>↓</span>
-          </a>
+          <TopSectionInnerLink className={style.topInfoLink} />
         </div>
       </FadeIn>
 

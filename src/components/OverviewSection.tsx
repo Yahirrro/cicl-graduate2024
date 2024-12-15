@@ -113,7 +113,7 @@ const overviewSectionStyles = sva({
 export const OverviewSection: React.FC = () => {
   const style = overviewSectionStyles();
   return (
-    <section className={style.container}>
+    <section className={style.container} id="overview">
       <div className={style.overviewSection}>
         <h2 className={style.title}>Overview</h2>
         <p className={style.text}>

@@ -26,5 +26,5 @@ export const TopPageContainer: React.FC<{ children: React.ReactNode }> = ({
     };
   }, [isLoaded]);
 
-  return children as React.ReactElement;
+  return children;
 };

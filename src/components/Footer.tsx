@@ -12,6 +12,7 @@ const footerStyles = sva({
     "opacity50",
     "socialContainer",
     "mauLogoContainer",
+    "licenseText",
   ],
   base: {
     wrapper: {
@@ -46,6 +47,7 @@ const footerStyles = sva({
     },
     textUppercase: {
       textTransform: "uppercase",
+      letterSpacing: "0.05rem",
     },
     opacity50: {
       opacity: 0.5,
@@ -94,6 +96,14 @@ const footerStyles = sva({
       mdDown: {
         justifyContent: "flex-start",
       },
+    },
+    licenseText: {
+      "& span": {
+        userSelect: "none",
+        transform: "translateX(4px) rotate(45deg)",
+        display: "inline-block",
+      },
+      mdDown: { mb: "32px" },
     },
   },
 });
@@ -168,18 +178,13 @@ export const Footer: React.FC = () => {
               })
             )}
           >{`©︎ Musashino Art University`}</p>
-          <p
-            className={cx(
-              style.text,
-              style.opacity50,
-              css({ mdDown: { mb: "32px" } })
-            )}
-          >
+          <p className={cx(style.text, style.opacity50, style.licenseText)}>
             <Link
               href={"https://github.com/Yahirrro/cicl-graduate2024"}
               target="_blank"
             >
               {`WebサイトのコードはMITライセンスおよび、CC by CC BY 4.0のライセンス条件(コモンズ証 - 表示 4.0 国際 - Creative Commons)のもと、GitHubにて公開されています。`}
+              <span>↑</span>
             </Link>
           </p>
           <Link

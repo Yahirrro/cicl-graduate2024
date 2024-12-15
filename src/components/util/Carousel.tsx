@@ -138,8 +138,8 @@ export const Carousel: React.FC<{
           <path
             d="M5 12H19M19 12L12 5M19 12L12 19"
             stroke="white"
-            stroke-width="2"
-            stroke-linecap="square"
+            strokeWidth="2"
+            strokeLinecap="square"
           />
         </svg>
       </button>
@@ -158,8 +158,8 @@ export const Carousel: React.FC<{
           <path
             d="M5 12H19M19 12L12 5M19 12L12 19"
             stroke="white"
-            stroke-width="2"
-            stroke-linecap="square"
+            strokeWidth="2"
+            strokeLinecap="square"
           />
         </svg>
       </button>

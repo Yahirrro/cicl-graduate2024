@@ -63,7 +63,7 @@ const introductionImagesStyles = sva({
         transition: "all 0.5s",
       },
       "& img": {
-        filter: "grayscale(1)",
+        filter: "grayscale(0.7)",
         width: "100%",
         height: "100%",
         objectFit: "cover",
