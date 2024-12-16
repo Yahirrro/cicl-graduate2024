@@ -4,6 +4,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { TypeSquareLoader } from "@/components/TypeSquareLoader";
 import { css, cx } from "../../styled-system/css";
+import Script from "next/script";
 
 //BasicallyASansSerif
 const basicallyASansSerif = localFont({
@@ -64,6 +65,26 @@ export default function RootLayout({
       >
         {children}
         <TypeSquareLoader />
+        <Script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "4ebe9d15b03a418c947b403cc07d2503"}'
+        />
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-RC05NDW2XJ"
+        />
+        <div
+          dangerouslySetInnerHTML={{
+            __html: `<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RC05NDW2XJ');
+</script>`,
+          }}
+        ></div>
       </body>
     </html>
   );
