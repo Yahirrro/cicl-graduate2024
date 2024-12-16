@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { cva } from "../../styled-system/css";
 import { useIsLoaded } from "@/app/hooks/useIsLoaded";
+import { useWindowHeight } from "@/app/hooks/useWindowHeight";
+import { useRef, useState } from "react";
 
 const visualViewerStyle = cva({
   base: {
@@ -35,6 +38,18 @@ const visualViewerStyle = cva({
 export const VisualViewer: React.FC = () => {
   const isLoaded = useIsLoaded();
   const style = visualViewerStyle();
+  const ref = useRef<any>();
+  const { scrollY } = useScroll();
+  const windowHeight = useWindowHeight();
+  const [isExceededHeight, setIsExceededHeight] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > windowHeight && !isExceededHeight) {
+      setIsExceededHeight(true);
+    } else if (latest <= windowHeight && isExceededHeight) {
+      setIsExceededHeight(false);
+    }
+  });
 
   if (!isLoaded) {
     return <></>;
@@ -42,6 +57,7 @@ export const VisualViewer: React.FC = () => {
 
   return (
     <motion.div
+      ref={ref}
       className={style}
       initial={{ scale: 1.2, filter: "blur(30px)" }}
       animate={{
@@ -57,13 +73,15 @@ export const VisualViewer: React.FC = () => {
         },
       }}
     >
-      <iframe
-        src="/assets/p5.html"
-        width="100%"
-        height="100%"
-        frameBorder="0"
-        scrolling="no"
-      />
+      {!isExceededHeight && (
+        <iframe
+          src="/assets/p5.html"
+          width="100%"
+          height="100%"
+          frameBorder="0"
+          scrolling="no"
+        />
+      )}
     </motion.div>
   );
 };
