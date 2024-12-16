@@ -15,7 +15,7 @@ export const useIsLoaded = () => {
       if (!isLoaded) {
         setIsLoaded(true);
       }
-    }, 3000);
+    }, 4000);
 
     window.addEventListener("load", handleLoad);
 
