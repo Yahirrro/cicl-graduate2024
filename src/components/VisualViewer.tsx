@@ -13,10 +13,10 @@ const visualViewerStyle = cva({
     width: "100%",
     height: "100%",
     background: "rgba(5, 7, 64, 1)",
+    userSelect: "none",
 
     "& iframe": {
       position: "relative",
-      aspectRatio: "16 / 9",
       width: "100%",
       height: "100%",
     },
@@ -31,6 +31,16 @@ const visualViewerStyle = cva({
       background: "rgba(5, 7, 64, 1)",
       zIndex: 1,
       mixBlendMode: "screen",
+    },
+    "&:after": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      display: "block",
+      width: "100%",
+      height: "100%",
+      bg: "radial-gradient(71.02% 71.02% at 50% 50%, rgba(5, 7, 64, 0) 60%, rgba(5, 7, 64, 1) 100%)",
     },
   },
 });

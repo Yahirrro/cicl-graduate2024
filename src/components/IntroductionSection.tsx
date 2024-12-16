@@ -44,10 +44,11 @@ const introductionSectionStyles = sva({
       fontSize: "52px",
       whiteSpace: "pre-line",
       fontWeight: "500",
-      fontFamily:
-        "var(--font-basically-a-sans-serif), Aoto Gothic Medium, Noto Sans JP",
       fontFeatureSettings: '"palt" on',
       letterSpacing: "-0.04em",
+      "& h2": {
+        textStyle: "demiBold",
+      },
       mdDown: {
         gridColumn: "1 / span 3",
         fontSize: "32px",
