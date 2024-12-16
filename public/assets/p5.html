@@ -14,24 +14,29 @@
   </head>
   <body>
     <script>
+      // 線の多さ
+      let lineRatio = 0.85;
 
+      // 全体をズームする
+      let zoom = 1.5;
+
+/*********************************************/
       // デバッグモード : パスの線も描画する
       let isDebugMode = false;
 
-      // 線の多さ
-      let lineRatio = 1.2;
 
       // ラインのランダムの範囲
-      let lineRange = 10;
+      let lineRange = 8;
 
       // 線の色
       let lineColer = { r: 190, g: 190, b: 190 };
 
       // 線の太さ
-      let lineWeight = 0.9;
+      let lineWeight = 1.3;
 
       // 線の長さ
-      let lineLength = 2.0;
+      let lineLength = 1.8;
+
 
       let lineSpeed = { min: 0.0005, max: 0.0010 };
 
@@ -67,10 +72,14 @@
         randomSeed(0);
 
         createCanvas(windowWidth, windowHeight);
+        smooth(); // メインキャンバスのアンチエイリアスを有効化
+        pg = createGraphics(windowWidth, windowHeight);
+        pg.smooth(); // グラフィックバッファのアンチエイリアスを有効化
+        colorMode(RGB, 255);
         noFill();
 
         drawBezier();
-        pixelDensity(2);
+        pixelDensity(4);
         segmentPoints.forEach((segments, index) => {
           var len = getTotalBezierLength(segments, resolution);
           var numLines = (int)((len / 7) * lineRatio);
@@ -180,7 +189,6 @@
               lineData.randX = random(-lineRange, lineRange);
               lineData.randY = random(-lineRange, lineRange);
             }
-
             var segLen = points.length;
             var setSegmentId = getSegmentIndex(points, lineData.t);
             var tVal = lineData.t;
@@ -226,12 +234,12 @@
             strokeWeight(lineW);
 
             var scaler = constrain(scalerX, 0.5, 2.5);
-            var width = windowWidth / scaler;
-            var height = windowHeight / scaler;
-            var x1 = ((startX * jsonData.scaler + jsonData.diffX) + (width / 2 - canvasSize.w / 2)) * scaler;
-            var y1 = ((startY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler;
-            var x2 = ((endX * jsonData.scaler + jsonData.diffX) + (width / 2 - canvasSize.w / 2)) * scaler;
-            var y2 = ((endY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler;
+            var width = windowWidth / (scaler*zoom);
+            var height = windowHeight / (scaler*zoom);
+            var x1 = ((startX * jsonData.scaler + jsonData.diffX) + (width / 2 - canvasSize.w / 2)) * scaler * zoom;
+            var y1 = ((startY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler * zoom;
+            var x2 = ((endX * jsonData.scaler + jsonData.diffX) + (width / 2 - canvasSize.w / 2)) * scaler * zoom;
+            var y2 = ((endY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler * zoom;
             // エリア外は非表示にして負荷低減
             var isInArea1 = (0 <= x1 && 0 <= y1) || (0 <= x2 && 0 <= y2);
             var isInArea2 = (x1 <= width && y1 <= height) || (x2 <= windowWidth && y2 <= windowHeight);
@@ -239,6 +247,10 @@
               line(x1, y1, x2, y2);
           });
         });
+        // let fps = frameRate();
+        // fill(255);
+        // stroke(0);
+        // text("FPS: " + fps.toFixed(2), 10, height - 10);
       }
 
       function proximityPeak(t, min, max) {
