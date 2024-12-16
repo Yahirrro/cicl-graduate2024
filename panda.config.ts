@@ -46,6 +46,13 @@ export default defineConfig({
         },
       },
       textStyles: {
+        demiBold: {
+          value: {
+            fontFamily:
+              "var(--font-basically-a-sans-serif), Aoto Gothic DemiBold, var(--font-noto-sans-jp), sans-serif",
+          },
+        },
+
         extraSmall: {
           value: {
             fontSize: "extraSmall",

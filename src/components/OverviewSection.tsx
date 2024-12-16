@@ -72,7 +72,8 @@ const overviewSectionStyles = sva({
       fontSize: "17px",
       lineHeight: "150%",
       whiteSpace: "pre-line",
-      fontWeight: "470",
+      fontWeight: "500",
+      textStyle: "demiBold",
     },
     detailText: {
       fontSize: "13px",

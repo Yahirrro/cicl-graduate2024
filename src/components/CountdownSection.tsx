@@ -41,6 +41,7 @@ const countDownSectionStyles = sva({
     countdownTitle: {
       gridColumn: "3 / span 2",
       fontSize: "20px",
+      textStyle: "demiBold",
       mdDown: {
         gridColumn: "span 1",
         textAlign: "center",
