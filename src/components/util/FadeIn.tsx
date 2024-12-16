@@ -1,6 +1,6 @@
 "use client";
 
-import { useIsLoaded } from "@/app/hooks/useIsLoaded";
+import { useIsLoaded } from "@/hooks/useIsLoaded";
 import { motion } from "framer-motion";
 
 export const FadeIn: React.FC<{

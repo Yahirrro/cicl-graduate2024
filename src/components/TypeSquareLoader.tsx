@@ -2,7 +2,7 @@
 
 "use client";
 
-import { loadTypeSquare } from "@/app/utils/loadTypeSquare";
+import { loadTypeSquare } from "@/utils/loadTypeSquare";
 import Script from "next/script";
 import { useEffect, useState } from "react";
 

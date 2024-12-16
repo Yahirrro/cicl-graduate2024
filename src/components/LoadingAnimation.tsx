@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useIsLoaded } from "@/app/hooks/useIsLoaded";
+import { useIsLoaded } from "@/hooks/useIsLoaded";
 
 const text = ["INSTITUTE-OF-INNOVATION", "GRADUATE-SHOW", "2024"];
 

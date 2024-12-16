@@ -36,6 +36,15 @@ export const metadata: Metadata = {
   title: "武蔵野美術大学 Institute of Innovation 卒業・修了展 2024",
   description:
     "武蔵野美術大学造形構想学部クリエイティブイノベーション学科 造形構想研究科造形構想専攻クリエイティブリーダーシップコース 卒業制作展 2024",
+  openGraph: {
+    images: "/ogp.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: {
+      url: "/ogp.png",
+    },
+  },
 };
 
 export default function RootLayout({

@@ -3,8 +3,8 @@
 
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { cva } from "../../styled-system/css";
-import { useIsLoaded } from "@/app/hooks/useIsLoaded";
-import { useWindowHeight } from "@/app/hooks/useWindowHeight";
+import { useIsLoaded } from "@/hooks/useIsLoaded";
+import { useWindowHeight } from "@/hooks/useWindowHeight";
 import { useRef, useState } from "react";
 
 const visualViewerStyle = cva({

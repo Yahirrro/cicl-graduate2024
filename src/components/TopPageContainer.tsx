@@ -1,6 +1,6 @@
 "use client";
 
-import { useIsLoaded } from "@/app/hooks/useIsLoaded";
+import { useIsLoaded } from "@/hooks/useIsLoaded";
 import { useEffect } from "react";
 
 export const TopPageContainer: React.FC<{ children: React.ReactNode }> = ({
