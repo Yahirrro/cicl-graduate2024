@@ -21,9 +21,6 @@
       let zoom = 1.5;
 
 /*********************************************/
-      // デバッグモード : パスの線も描画する
-      let isDebugMode = false;
-
 
       // ラインのランダムの範囲
       let lineRange = 8;
@@ -51,8 +48,6 @@
 
       let allSegments;
       let segmentPoints = [];
-      let pointSets = [];
-      let segmentsIds = [];
       let lines = [];
       let lineLen = [];
 
@@ -105,21 +100,7 @@
       function drawBezier() {
 
         for (let segments of allSegments) {
-          // ベジエ曲線をセグメント単位で描画
 
-          if (isDebugMode) {
-            // 各セグメントの制御点を描画（確認用）
-            stroke(0);
-            fill(255, 0, 0); // 制御点は赤で表示
-            for (let segment of segments.segments) {
-              for (let i = 0; i < segment.length; i++) {
-                ellipse(segment[i].x, segment[i].y, 10, 10); // 制御点を円で描画
-                textAlign(CENTER, CENTER);
-                textSize(12);
-                text(`(${i})`, segment[i].x, segment[i].y - 15); // 制御点のインデックスを表示
-              }
-            }
-          }
           stroke(255, 0, 0); // ベジエ曲線は赤で描画
           noFill();
 
@@ -137,8 +118,6 @@
 
           if (segments.segments.length != 3) {
             segmentPoints.push(updatedSegments);
-            drawHighOrderBezier(updatedSegments);
-            segmentsIds.push(segments.name);
             lineLen.push(len);
           }
         }
@@ -147,36 +126,7 @@
       function draw() {
         background(0, 22, 37);
 
-        if (isDebugMode) {
-          segmentPoints.forEach((segments, index) => {
-            // 各セグメントの制御点を描画（確認用）
-            stroke(255, 0, 0);
-            // fill(255, 0, 0); // 制御点は赤で表示
-            for (let segment of segments) {
-              for (let i = 0; i < segment.length; i++) {
-
-                if (i == 0) {
-                  ellipse(segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY, 10, 10); // 制御点を円で描画
-                  text(`(${i}) ${segmentsIds[index]}`, segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY - 15); // 制御点のインデックスを表示
-                }
-                else if (i == segment.length - 1) {
-                  {
-                    ellipse(segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY, 10, 10); // 制御点を円で描画
-                    text(`(${i}) ${segmentsIds[index]}`, segment[i].x * jsonData.scaler + jsonData.diffX, segment[i].y * jsonData.scaler + jsonData.diffY - 15); // 制御点のインデックスを表示
-                  }
-                }
-                textAlign(CENTER, CENTER);
-                textSize(12);
-              }
-            }
-          });
-        }
-
         segmentPoints.forEach((points, index) => {
-
-          if (isDebugMode) {
-            drawHighOrderBezier(points);
-          }
 
           lines[index].forEach((lineData) => {
 
@@ -242,15 +192,11 @@
             var y2 = ((endY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler * zoom;
             // エリア外は非表示にして負荷低減
             var isInArea1 = (0 <= x1 && 0 <= y1) || (0 <= x2 && 0 <= y2);
-            var isInArea2 = (x1 <= width && y1 <= height) || (x2 <= windowWidth && y2 <= windowHeight);
+            var isInArea2 = (x1 <= windowWidth && y1 <= windowHeight) || (x2 <= width && y2 <= windowHeight);
             if (isInArea1 && isInArea2)
               line(x1, y1, x2, y2);
           });
         });
-        // let fps = frameRate();
-        // fill(255);
-        // stroke(0);
-        // text("FPS: " + fps.toFixed(2), 10, height - 10);
       }
 
       function proximityPeak(t, min, max) {
@@ -318,22 +264,6 @@
         vertex(0, 0);
         vertex(width, height);
         endShape();
-      }
-
-      // セグメント単位で高次ベジエ曲線を描画
-      function drawHighOrderBezier(segments) {
-
-        beginShape(); // すべてのセグメントを1つの形状として描画
-        for (let segment of segments) {
-          for (let t = 0; t <= 1; t += 1 / 100) {
-            let point = bezierPointForSegment(t, segment);
-            if (isDebugMode) {
-              stroke(200);
-              vertex(point.x * jsonData.scaler + jsonData.diffX, point.y * jsonData.scaler + jsonData.diffY);
-            }
-          }
-        }
-        endShape(); // 形状を終了
       }
 
       // セグメントを高次ベジエ曲線の制御点リストに変換
