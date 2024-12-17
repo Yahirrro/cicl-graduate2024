@@ -38,10 +38,17 @@ export const metadata: Metadata = {
   description:
     "武蔵野美術大学造形構想学部クリエイティブイノベーション学科 造形構想研究科造形構想専攻クリエイティブリーダーシップコース 卒業制作展 2024",
   openGraph: {
-    images: "https://ciclgs24.musabi.ac.jp/ogp.png",
+    type: "website",
+    images: [{ url: "https://ciclgs24.musabi.ac.jp/ogp.png" }],
+    description:
+      "武蔵野美術大学造形構想学部クリエイティブイノベーション学科 造形構想研究科造形構想専攻クリエイティブリーダーシップコース 卒業制作展 2024",
+    url: "https://ciclgs24.musabi.ac.jp/",
+    siteName: "武蔵野美術大学 Institute of Innovation 卒業・修了展2024",
+    locale: "ja",
   },
   twitter: {
     card: "summary_large_image",
+    site: "@musabi_koho",
     images: {
       url: "https://ciclgs24.musabi.ac.jp/ogp.png",
     },
