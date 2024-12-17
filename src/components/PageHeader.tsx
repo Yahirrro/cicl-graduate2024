@@ -32,12 +32,35 @@ const pageHeaderStyles = sva({
       height: "fit-content",
     },
   },
+  variants: {
+    white: {
+      true: {
+        wrapper: {
+          bg: "white",
+          bgImage: "initial !important",
+          height: "initial",
+          pb: "64px",
+          "& svg": {
+            fill: "#000480",
+          },
+        },
+        container: {
+          gridTemplateRows: "auto",
+        },
+        title: {
+          display: "none",
+        },
+      },
+    },
+  },
 });
 
 export const PageHeader: React.FC<{
+  white?: boolean;
   title?: string;
-}> = ({ title }) => {
-  const style = pageHeaderStyles();
+}> = ({ title, ...props }) => {
+  const [variantProps, rest] = pageHeaderStyles.splitVariantProps(props);
+  const style = pageHeaderStyles(variantProps);
 
   return (
     <header
@@ -45,6 +68,7 @@ export const PageHeader: React.FC<{
       style={{
         backgroundImage: "url(./bg.png)",
       }}
+      {...rest}
     >
       <div className={style.container}>
         <Link href={"/"}>

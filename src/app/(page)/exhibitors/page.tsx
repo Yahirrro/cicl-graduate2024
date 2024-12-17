@@ -5,6 +5,8 @@ import { ExhibitionFloorSection } from "@/components/ExhibitionFloorSection";
 import { getSortedFloors } from "@/utils/getSortedFloors";
 import { ExhibitionRecord } from "@/types";
 
+export const runtime = "edge";
+
 const BgWhite = styled("div", {
   base: {
     bg: "white",
