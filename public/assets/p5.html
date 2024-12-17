@@ -192,7 +192,7 @@
             var y2 = ((endY * jsonData.scaler + jsonData.diffY) + (height / 2 - canvasSize.h / 2)) * scaler * zoom;
             // エリア外は非表示にして負荷低減
             var isInArea1 = (0 <= x1 && 0 <= y1) || (0 <= x2 && 0 <= y2);
-            var isInArea2 = (x1 <= windowWidth && y1 <= windowHeight) || (x2 <= width && y2 <= windowHeight);
+            var isInArea2 = (x1 <= windowWidth && y1 <= windowHeight) || (x2 <= windowWidth && y2 <= windowHeight);
             if (isInArea1 && isInArea2)
               line(x1, y1, x2, y2);
           });
