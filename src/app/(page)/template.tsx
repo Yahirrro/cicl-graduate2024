@@ -15,8 +15,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <>
       {children}
       <BgWhite>
-        <OverviewSection />
-        <Footer />
+        <OverviewSection isPage />
+        <Footer isPage />
       </BgWhite>
     </>
   );

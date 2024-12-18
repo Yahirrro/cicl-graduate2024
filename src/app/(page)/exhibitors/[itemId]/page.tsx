@@ -12,6 +12,9 @@ const Wrapper = styled("div", {
     px: "72px",
     bg: "white",
     color: "#000480",
+    mdDown: {
+      px: "32px",
+    },
   },
 });
 
@@ -22,6 +25,10 @@ const Container = styled("article", {
     maxW: "calc(1640px - (72px * 2))",
     mx: "auto",
     gap: "24px",
+
+    mdDown: {
+      gridTemplateColumns: "repeat(2, 1fr)",
+    },
   },
 });
 
@@ -63,7 +70,10 @@ export default async function Page({
       <PageHeader white />
       <Wrapper>
         <Container>
-          <ExhibitorsArticleHeader {...item} />
+          <ExhibitorsArticleHeader
+            {...item}
+            isLongText={item.title.length >= 31}
+          />
           <Description>{item.description}</Description>
           <ExhibitorsArticleShare />
         </Container>

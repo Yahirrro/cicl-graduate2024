@@ -17,6 +17,9 @@ const exhibitionFloorSection = sva({
       _lastOfType: {
         pb: "172px",
       },
+      mdDown: {
+        gridTemplateColumns: "repeat(9, 1fr)",
+      },
     },
     title: {
       position: "sticky",
@@ -27,11 +30,18 @@ const exhibitionFloorSection = sva({
       color: "rgba(0, 4, 128, 1)",
       gridColumn: "span 2",
       lineHeight: "1",
+      mdDown: {
+        fontSize: "34px",
+        top: "calc(60px + 24px)",
+      },
     },
     section: {
       display: "grid",
       gap: "24px",
       gridColumn: "span 3",
+      mdDown: {
+        gridColumn: "span 7",
+      },
     },
   },
 });
@@ -65,6 +75,9 @@ const exhibitionFloorSectionItemStyles = sva({
       alignItems: "center",
       pb: "24px",
       color: "rgba(0, 4, 128, 1)",
+      mdDown: {
+        gridTemplateColumns: "1fr 8px",
+      },
     },
     container: {
       display: "grid",
@@ -72,6 +85,9 @@ const exhibitionFloorSectionItemStyles = sva({
     },
     title: {
       fontSize: "26px",
+      mdDown: {
+        fontSize: "21px",
+      },
     },
     author: {
       fontSize: "16px",

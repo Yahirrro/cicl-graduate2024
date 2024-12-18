@@ -19,6 +19,9 @@ const Container = styled("div", {
     px: "72px",
     minH: "500vh",
     mt: "48px",
+    mdDown: {
+      px: "32px 16px",
+    },
   },
 });
 
@@ -35,7 +38,7 @@ export default async function Home() {
 
   return (
     <BgWhite>
-      <PageHeader title="Floor Map" />
+      <PageHeader title="Exhibitors" />
       <ExhibitionNavbar floors={floors} />
 
       <Container>

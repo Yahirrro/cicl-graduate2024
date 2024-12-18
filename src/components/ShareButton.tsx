@@ -12,11 +12,21 @@ const saveButtonStyles = sva({
       gridTemplateColumns: "1fr auto",
       alignItems: "center",
       gap: "32px",
+      userSelect: "none",
+      mdDown: {
+        gridTemplateColumns: "auto 1fr",
+        gap: "16px",
+      },
     },
     labelContainer: {
       textAlign: "right",
       fontSize: "16px",
       display: "block",
+      mdDown: {
+        order: "2",
+        textAlign: "left",
+        fontSize: "14px",
+      },
     },
     label: {
       display: "block",

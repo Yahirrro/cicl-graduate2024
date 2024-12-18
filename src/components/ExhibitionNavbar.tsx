@@ -13,6 +13,10 @@ const exhibitionNavbarStyles = sva({
       top: 0,
       bg: "white",
       zIndex: 1,
+      mdDown: {
+        px: "32px",
+        height: "64px",
+      },
     },
     container: {
       display: "grid",
@@ -21,6 +25,9 @@ const exhibitionNavbarStyles = sva({
       maxW: "calc(1640px - (72px * 2))",
       mx: "auto",
       height: "100%",
+      mdDown: {
+        gridTemplateColumns: "repeat(2, 1fr)",
+      },
     },
     floors: {
       gridColumn: "1/3",
@@ -32,10 +39,16 @@ const exhibitionNavbarStyles = sva({
         fontWeight: "bold",
         textStyle: "demiBold",
         color: "rgba(0, 4, 128, 1)",
+        mdDown: {
+          fontSize: "14px",
+        },
       },
     },
     search: {
       gridColumn: "3/6",
+      mdDown: {
+        display: "none",
+      },
     },
   },
 });

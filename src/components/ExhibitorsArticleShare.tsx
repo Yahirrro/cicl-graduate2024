@@ -11,6 +11,11 @@ const exhibitorsArticleShareStyles = sva({
       gridColumn: "span 5",
       pt: "72px",
       pb: "128px",
+      mdDown: {
+        gridColumn: "span 2",
+        rowGap: "32px",
+        pb: "92px",
+      },
     },
     saveButton: {
       gridColumn: "span 2",

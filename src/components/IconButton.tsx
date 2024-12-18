@@ -14,6 +14,10 @@ const iconButtonStyles = cva({
     _active: {
       opacity: 0.5,
     },
+    mdDown: {
+      h: "52px",
+      w: "52px",
+    },
   },
 });
 

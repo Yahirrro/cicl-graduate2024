@@ -12,10 +12,17 @@ const exhibitorsArticleHeaderStyles = sva({
       gap: "24px",
       pt: "64px",
       pb: "64px",
+      mdDown: {
+        gridColumn: "span 2",
+      },
     },
     title: {
       fontSize: "64px",
       gridColumn: "span 3",
+      mdDown: {
+        gridColumn: "span 2",
+        fontSize: "40px",
+      },
     },
 
     author: {
@@ -24,25 +31,46 @@ const exhibitorsArticleHeaderStyles = sva({
       gridTemplateColumns: "subgrid",
       fontSize: "20px",
       height: "100%",
+      mdDown: {
+        gridColumn: "span 2",
+        fontSize: "15px",
+        gap: "16px 24px",
+      },
       "& p": {
         alignContent: "center",
       },
     },
     save: {
       gridColumn: "5/6",
-      height: "64px",
+      mdDown: {
+        gridColumn: "span 2",
+        pt: "32px",
+        display: "none",
+      },
+    },
+  },
+  variants: {
+    isLongText: {
+      true: {
+        title: {
+          fontSize: "42px",
+          mdDown: {
+            fontSize: "32px",
+          },
+        },
+      },
     },
   },
 });
 
-export const ExhibitorsArticleHeader: React.FC<ExhibitionRecord> = ({
-  title,
-  author,
-  type,
-  floor,
-  area,
-}) => {
-  const style = exhibitorsArticleHeaderStyles();
+export const ExhibitorsArticleHeader: React.FC<
+  ExhibitionRecord & {
+    isLongText?: boolean;
+  }
+> = ({ title, author, type, floor, area, isLongText }) => {
+  const style = exhibitorsArticleHeaderStyles({
+    isLongText,
+  });
   return (
     <header className={style.container}>
       <h1 className={style.title}>{title}</h1>
