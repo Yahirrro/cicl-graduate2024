@@ -75,8 +75,14 @@ const exhibitionFloorSectionItemStyles = sva({
       alignItems: "center",
       pb: "24px",
       color: "rgba(0, 4, 128, 1)",
+      "& svg": {
+        w: "12px",
+      },
       mdDown: {
         gridTemplateColumns: "1fr 8px",
+        "& svg": {
+          w: "8px",
+        },
       },
     },
     container: {

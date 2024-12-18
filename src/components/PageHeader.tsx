@@ -17,7 +17,7 @@ const pageHeaderStyles = sva({
       overflow: "hidden",
       mdDown: {
         px: "24px",
-        pb: "24px",
+        pb: "20px",
         pt: "24px",
         height: "initial",
       },
@@ -32,7 +32,7 @@ const pageHeaderStyles = sva({
       mx: "auto",
       mdDown: {
         gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "128px 24px",
+        gap: "92px 24px",
       },
     },
     title: {
@@ -41,10 +41,10 @@ const pageHeaderStyles = sva({
       fontWeight: "bold",
       height: "100%",
       alignContent: "end",
-      lineHeight: 1.2,
+      lineHeight: 1,
       mdDown: {
         gridColumn: "span 2",
-        fontSize: "64px",
+        fontSize: "48px",
       },
     },
   },
