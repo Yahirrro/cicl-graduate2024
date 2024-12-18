@@ -58,6 +58,12 @@ const introductionSectionStyles = sva({
       gridColumn: "4 / span 2",
       fontSize: "19px",
       lineHeight: "175%",
+      "& p": {
+        "& span": {
+          mb: "12px",
+          display: "block",
+        },
+      },
       mdDown: {
         gridColumn: "1 / span 3",
         fontSize: "15px",
@@ -73,10 +79,32 @@ export const IntroductionSection: React.FC = () => {
     <section className={style.container}>
       <div className={style.introductionContainer}>
         <FadeInInView className={style.introductionTitle} delay={0}>
-          <h2>{`CI/CLらしい\n「学びと制作」の\n集大成。`}</h2>
+          <h2>{`連なる、広がる、巡る。`}</h2>
         </FadeInInView>
         <FadeInInView className={style.introductionText} delay={0.8}>
-          <p>{`わたしたちは日夜、研究と実験を繰り返しています。 それは、 制作や実践を伝える手引きとなる、展開図を作る作業にも似ています。 展開図は、組み立てるための説明や試行の軌跡であり、 組み立てたものを紐解くための解説でもあるからです。その中には、それぞれが見つけたゴールと、 生み出した方法があります。その多様さこそが、 わたしたちの特徴です。 本年度の卒業・修了展のテーマは「展開図」それはわたしたちの軌跡であり、 これからの道標。 それぞれの新しい未来と、 今への眼差しを是非ともお楽しみください。(仮テキスト)`}</p>
+          <p>
+            <span>
+              私たちが日々発した言葉や生み出してきた作品は、小さな粒として、連なり、広がり、時に反発し合いながら、社会を巻き込んできました。
+            </span>
+            <span>
+              そうして広がった豊かな繋がりは、再び私たちの創造の糧となって、新たなイノベーションを起こしていきます。
+            </span>
+            <span>
+              本展で、皆様をこの
+              <ruby>
+                環 <rp>(</rp>
+                <rt>わ</rt>
+                <rp>)</rp>
+              </ruby>
+              の中に巻き込み、さらなる大きな
+              <ruby>
+                環 <rp>(</rp>
+                <rt>わ</rt>
+                <rp>)</rp>
+              </ruby>
+              が生まれることを願っています。
+            </span>
+          </p>
         </FadeInInView>
       </div>
       <IntroductionImages />
