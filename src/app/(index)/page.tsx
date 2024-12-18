@@ -4,6 +4,7 @@ import { TopSection } from "@/components/TopSection";
 import { VisualViewer } from "@/components/VisualViewer";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
 import { styled } from "../../../styled-system/jsx";
+import { LinkSection } from "@/components/LinkSection";
 
 export const runtime = "edge";
 
@@ -25,6 +26,7 @@ export default function Home() {
       <BgWhite>
         <IntroductionSection />
         <CountDownSection />
+        <LinkSection />
       </BgWhite>
     </>
   );
