@@ -92,13 +92,13 @@ export const IntroductionSection: React.FC = () => {
             <span>
               本展で、皆様をこの
               <ruby>
-                環 <rp>(</rp>
+                環<rp>(</rp>
                 <rt>わ</rt>
                 <rp>)</rp>
               </ruby>
               の中に巻き込み、さらなる大きな
               <ruby>
-                環 <rp>(</rp>
+                環<rp>(</rp>
                 <rt>わ</rt>
                 <rp>)</rp>
               </ruby>
