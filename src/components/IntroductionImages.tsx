@@ -1,7 +1,12 @@
+/* eslint-disable @next/next/no-img-element */
+"use client";
+
 import { IntroductionImagesData } from "@/data";
-import { sva } from "../../styled-system/css";
-import { Carousel } from "./util/Carousel";
-import { FadeInInView } from "./util/FadeInInView";
+import { css, sva } from "../../styled-system/css";
+import React, { useEffect } from "react";
+import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
+import { useWindowWidth } from "@/hooks/useWindowWidth";
 
 const introductionImagesStyles = sva({
   slots: ["container", "carousel", "image"],
@@ -11,15 +16,16 @@ const introductionImagesStyles = sva({
       width: "calc(100% + 72px * 2)",
       transform: "translateX(-72px)",
       padding: "0 calc(72px - 12px)",
-      overflow: "hidden",
-      cursor: "grab",
+      overflow: "clip",
       pb: "24px",
+      height: "500vh",
+      position: "relative",
       mdDown: {
         gridColumn: "1 / span 3",
         width: "calc(100% + 32px * 2)",
         transform: "translateX(-32px)",
         px: "calc(32px - 8px)",
-        pb: "12px",
+        pb: "0px",
       },
     },
     carousel: {
@@ -41,34 +47,10 @@ const introductionImagesStyles = sva({
         },
       },
 
-      _hover: {
-        _after: {
-          opacity: 0,
-        },
-        "& img": {
-          filter: "grayscale(0)",
-        },
-        animation: "flashIn 1s",
-      },
-      _after: {
-        content: '""',
-        display: "block",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(0, 4, 128, 0.6)",
-        zIndex: 10,
-        mixBlendMode: "screen",
-        transition: "all 0.5s",
-      },
       "& img": {
-        filter: "grayscale(0.7)",
         width: "100%",
         height: "100%",
         objectFit: "cover",
-        transition: "all 0.8s",
       },
 
       mdDown: {
@@ -82,23 +64,114 @@ const introductionImagesStyles = sva({
 
 export const IntroductionImages: React.FC = () => {
   const style = introductionImagesStyles();
+  const ref = React.useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+  });
+  const width = useWindowWidth();
+  const carouselRef = React.useRef<HTMLDivElement>(null);
+  const [carouselWidth, setCarouselWidth] = React.useState(0);
+
+  const isMd = useMediaQuery({
+    query: "(max-width: 47.9975rem)",
+  });
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      console.log(
+        "carouselRef.current.scrollWidth",
+        carouselRef.current.scrollWidth
+      );
+      setCarouselWidth(carouselRef.current.scrollWidth);
+    }
+  }, [width]);
+
   return (
-    <figure className={style.container}>
-      <FadeInInView
-        viewport={{
-          once: true,
-          amount: 0.3,
-        }}
-        delay={0.5}
+    <figure className={style.container} ref={ref}>
+      <div
+        className={css({
+          position: "sticky",
+          top: "0",
+          height: "100lvh",
+        })}
       >
-        <Carousel>
-          {IntroductionImagesData.map((image, i) => (
-            <div key={i} className={style.image}>
-              <img src={image.url} alt={image.alt} />
-            </div>
-          ))}
-        </Carousel>
-      </FadeInInView>
+        <div
+          className={css({
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          })}
+        >
+          <motion.div
+            className={css({
+              display: "flex",
+            })}
+            ref={carouselRef}
+            style={{
+              x: useTransform(
+                scrollYProgress,
+                [0, 1],
+                [0, -(carouselWidth - width + (isMd ? 24 : 72) * 2)],
+                {
+                  ease: easeInOut,
+                }
+              ),
+            }}
+          >
+            {IntroductionImagesData.map((image) => (
+              <motion.div
+                key={encodeURIComponent(image.url) + "-container"}
+                className={style.image}
+              >
+                <motion.div
+                  key={encodeURIComponent(image.url) + "-animation"}
+                  className={css({
+                    display: "block",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    background: "rgba(0, 4, 128, 0.6)",
+                    zIndex: 10,
+                    mixBlendMode: "screen",
+                  })}
+                  initial={{
+                    opacity: 1,
+                  }}
+                  whileInView={{
+                    opacity: 0,
+                  }}
+                  viewport={{
+                    amount: isMd ? 0.8 : 1,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                  }}
+                ></motion.div>
+                <motion.img
+                  key={encodeURIComponent(image.url)}
+                  src={image.url}
+                  alt={image.alt}
+                  initial={{
+                    filter: "grayscale(1)",
+                  }}
+                  whileInView={{
+                    filter: "grayscale(0)",
+                  }}
+                  viewport={{
+                    amount: isMd ? 0.8 : 1,
+                  }}
+                  transition={{
+                    duration: 0.6,
+                  }}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </div>
     </figure>
   );
 };
