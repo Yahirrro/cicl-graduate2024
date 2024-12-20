@@ -36,7 +36,7 @@ const introductionSectionStyles = sva({
       pb: "0",
       mdDown: {
         gridColumn: "1 / span 3",
-        pb: "0px",
+        pb: "32px",
         gap: "42px",
       },
     },

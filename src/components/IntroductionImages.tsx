@@ -17,16 +17,23 @@ const introductionImagesStyles = sva({
       transform: "translateX(-72px)",
       padding: "0 calc(72px - 12px)",
       overflow: "clip",
-      pb: "24px",
       height: "500vh",
       position: "relative",
+
+      pt: "128px",
+      pb: "128px",
+      my: "min(calc(((100vh - (38.25% / 2) * 3) / 2) * -1), 0px)",
+
       mdDown: {
         gridColumn: "1 / span 3",
         width: "calc(100% + 32px * 2)",
         transform: "translateX(-32px)",
         px: "calc(32px - 8px)",
-        pb: "0px",
-        height: "450vh",
+        height: "600vh",
+
+        pt: "64px",
+        pb: "48px",
+        my: "min(calc(((100vh - (80% / 2) * 3) / 2) * -1), 0px)",
       },
     },
     carousel: {
@@ -42,9 +49,15 @@ const introductionImagesStyles = sva({
       userSelect: "none",
 
       "&:nth-of-type(even)": {
-        transform: "translateY(24px)",
+        transform: "translateY(12px)",
         mdDown: {
-          transform: "translateY(12px)",
+          transform: "translateY(6px)",
+        },
+      },
+      "&:nth-of-type(odd)": {
+        transform: "translateY(-12px)",
+        mdDown: {
+          transform: "translateY(-6px)",
         },
       },
 
@@ -93,7 +106,7 @@ export const IntroductionImages: React.FC = () => {
         className={css({
           position: "sticky",
           top: "0",
-          height: "100lvh",
+          height: "max(calc((38.25vw / 2) * 3) , 100lvh)",
         })}
       >
         <div
@@ -115,7 +128,7 @@ export const IntroductionImages: React.FC = () => {
                 [0, 1],
                 [0, -(carouselWidth - width + (isMd ? 24 : 72) * 2)],
                 {
-                  ease: easeInOut,
+                  ease: isMd ? undefined : easeInOut,
                 }
               ),
             }}
