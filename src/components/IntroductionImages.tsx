@@ -26,7 +26,7 @@ const introductionImagesStyles = sva({
         transform: "translateX(-32px)",
         px: "calc(32px - 8px)",
         pb: "0px",
-        height: "450vh",
+        height: "600vh",
       },
     },
     carousel: {
@@ -115,7 +115,7 @@ export const IntroductionImages: React.FC = () => {
                 [0, 1],
                 [0, -(carouselWidth - width + (isMd ? 24 : 72) * 2)],
                 {
-                  ease: easeInOut,
+                  ease: isMd ? undefined : easeInOut,
                 }
               ),
             }}
