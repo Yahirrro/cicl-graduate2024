@@ -17,13 +17,13 @@ const introductionSectionStyles = sva({
       gridTemplateColumns: "repeat(5, 1fr)",
       px: "72px",
       pt: "92px",
-      pb: "128px",
+      pb: "0px",
       maxWidth: "1920px",
       mx: "auto",
       color: "rgba(0, 4, 128, 1)",
       mdDown: {
         pt: "72px",
-        pb: "72px",
+        pb: "0px",
         gridTemplateColumns: "repeat(3, 1fr)",
         px: "32px",
       },
@@ -33,10 +33,10 @@ const introductionSectionStyles = sva({
       gridTemplateColumns: "subgrid",
       gridColumn: "1 / span 5",
       gap: "24px",
-      pb: "128px",
+      pb: "0",
       mdDown: {
         gridColumn: "1 / span 3",
-        pb: "72px",
+        pb: "0px",
       },
     },
     introductionTitle: {
@@ -62,6 +62,9 @@ const introductionSectionStyles = sva({
         "& span": {
           mb: "12px",
           display: "block",
+          _lastOfType: {
+            mb: "0",
+          },
         },
       },
       mdDown: {
