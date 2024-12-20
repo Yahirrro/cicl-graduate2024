@@ -1,3 +1,4 @@
+import { IntroductionImagesData } from "@/data";
 import { sva } from "../../styled-system/css";
 import { Carousel } from "./util/Carousel";
 import { FadeInInView } from "./util/FadeInInView";
@@ -91,9 +92,9 @@ export const IntroductionImages: React.FC = () => {
         delay={0.5}
       >
         <Carousel>
-          {[...Array(4)].map((_, i) => (
+          {IntroductionImagesData.map((image, i) => (
             <div key={i} className={style.image}>
-              <img src={"https://picsum.photos/120" + i} alt="" />
+              <img src={image.url} alt={image.alt} />
             </div>
           ))}
         </Carousel>
