@@ -3,10 +3,6 @@ export const IntroductionImagesData: {
   alt: string;
 }[] = [
   {
-    url: "/assets/images/introduction/image-1.jpg",
-    alt: "武蔵野美術大学市ヶ谷キャンパスの建物外観を斜めの角度から撮影した写真",
-  },
-  {
     url: "/assets/images/introduction/image-2.jpg",
     alt: "武蔵野美術大学市ヶ谷キャンパスの正面外観を上から見上げる構図で撮影した写真",
   },
@@ -21,6 +17,10 @@ export const IntroductionImagesData: {
   {
     url: "/assets/images/introduction/image-5.jpg",
     alt: "作業机で設計図を描く学生の姿",
+  },
+  {
+    url: "/assets/images/introduction/image-14.jpg",
+    alt: "作業スペースでリラックスしながら会話をしている学生たち",
   },
   {
     url: "/assets/images/introduction/image-6.jpg",
