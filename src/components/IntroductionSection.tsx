@@ -22,7 +22,7 @@ const introductionSectionStyles = sva({
       mx: "auto",
       color: "rgba(0, 4, 128, 1)",
       mdDown: {
-        pt: "72px",
+        pt: "92px",
         pb: "0px",
         gridTemplateColumns: "repeat(3, 1fr)",
         px: "32px",
@@ -37,6 +37,7 @@ const introductionSectionStyles = sva({
       mdDown: {
         gridColumn: "1 / span 3",
         pb: "0px",
+        gap: "42px",
       },
     },
     introductionTitle: {
@@ -60,7 +61,7 @@ const introductionSectionStyles = sva({
       lineHeight: "175%",
       "& p": {
         "& span": {
-          mb: "12px",
+          mb: "24px",
           display: "block",
           _lastOfType: {
             mb: "0",

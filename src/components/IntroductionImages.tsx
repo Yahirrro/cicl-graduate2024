@@ -26,6 +26,7 @@ const introductionImagesStyles = sva({
         transform: "translateX(-32px)",
         px: "calc(32px - 8px)",
         pb: "0px",
+        height: "400vh",
       },
     },
     carousel: {
