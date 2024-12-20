@@ -145,7 +145,7 @@ export const IntroductionImages: React.FC = () => {
                     opacity: 0,
                   }}
                   viewport={{
-                    amount: isMd ? 0.8 : 1,
+                    amount: isMd ? 0.5 : 1,
                   }}
                   transition={{
                     duration: 0.6,
@@ -162,7 +162,7 @@ export const IntroductionImages: React.FC = () => {
                     filter: "grayscale(0)",
                   }}
                   viewport={{
-                    amount: isMd ? 0.8 : 1,
+                    amount: isMd ? 0.5 : 1,
                   }}
                   transition={{
                     duration: 0.6,
