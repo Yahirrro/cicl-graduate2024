@@ -4,7 +4,13 @@
 import { IntroductionImagesData } from "@/data";
 import { css, sva } from "../../styled-system/css";
 import React, { useEffect } from "react";
-import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
+import {
+  easeInOut,
+  motion,
+  MotionValue,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 import { useWindowWidth } from "@/hooks/useWindowWidth";
 
@@ -91,10 +97,24 @@ export const IntroductionImages: React.FC = () => {
   });
 
   useEffect(() => {
+    const updateCarouselWidth = () => {
+      if (carouselRef.current) {
+        setCarouselWidth(carouselRef.current.scrollWidth);
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(updateCarouselWidth);
     if (carouselRef.current) {
-      setCarouselWidth(carouselRef.current.scrollWidth);
+      resizeObserver.observe(carouselRef.current);
     }
-  }, [width]);
+
+    window.addEventListener("resize", updateCarouselWidth);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateCarouselWidth);
+    };
+  }, []);
 
   return (
     <figure className={style.container} ref={ref}>
@@ -111,77 +131,106 @@ export const IntroductionImages: React.FC = () => {
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
+            overscrollBehavior: "none",
           })}
         >
-          <motion.div
-            className={css({
-              display: "flex",
-            })}
-            ref={carouselRef}
-            style={{
-              x: useTransform(
-                scrollYProgress,
-                [0, 1],
-                [0, -(carouselWidth - width + (isMd ? 24 : 72) * 2)],
-                {
-                  ease: isMd ? undefined : easeInOut,
-                }
-              ),
-            }}
-          >
-            {IntroductionImagesData.map((image) => (
-              <motion.div
-                key={encodeURIComponent(image.url) + "-container"}
-                className={style.image}
-              >
-                <motion.div
-                  key={encodeURIComponent(image.url) + "-animation"}
-                  className={css({
-                    display: "block",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    background: "rgba(0, 4, 128, 0.6)",
-                    zIndex: 10,
-                    mixBlendMode: "screen",
-                  })}
-                  initial={{
-                    opacity: 1,
-                  }}
-                  whileInView={{
-                    opacity: 0,
-                  }}
-                  viewport={{
-                    amount: isMd ? 0.5 : 1,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                  }}
-                ></motion.div>
-                <motion.img
-                  key={encodeURIComponent(image.url)}
-                  src={image.url}
-                  alt={image.alt}
-                  initial={{
-                    filter: "grayscale(1)",
-                  }}
-                  whileInView={{
-                    filter: "grayscale(0)",
-                  }}
-                  viewport={{
-                    amount: isMd ? 0.5 : 1,
-                  }}
-                  transition={{
-                    duration: 0.6,
-                  }}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
+          <Carousel
+            carouselRef={carouselRef}
+            scrollYProgress={scrollYProgress}
+            carouselWidth={carouselWidth}
+            width={width}
+            isMd={isMd}
+            style={style}
+          />
         </div>
       </div>
     </figure>
   );
 };
+
+type CarouselProps = {
+  carouselRef: React.RefObject<HTMLDivElement>;
+  scrollYProgress: MotionValue<number>;
+  carouselWidth: number;
+  width: number;
+  isMd: boolean;
+  style: Record<string, string>;
+};
+
+export const Carousel: React.FC<CarouselProps> = ({
+  carouselRef,
+  scrollYProgress,
+  carouselWidth,
+  width,
+  isMd,
+  style,
+}) => (
+  <motion.div
+    className={css({ display: "flex" })}
+    ref={carouselRef}
+    style={{
+      x: useTransform(
+        scrollYProgress,
+        [0, 1],
+        [0, -(carouselWidth - width + (isMd ? 24 : 72) * 2)],
+        { ease: isMd ? undefined : easeInOut }
+      ),
+    }}
+  >
+    {IntroductionImagesData.map((image) => (
+      <CarouselItem
+        key={image.url}
+        url={image.url}
+        alt={image.alt}
+        isMd={isMd}
+        style={style}
+      />
+    ))}
+  </motion.div>
+);
+
+type CarouselItemProps = {
+  url: string;
+  alt: string;
+  isMd: boolean;
+  style: Record<string, string>;
+};
+
+export const CarouselItem: React.FC<CarouselItemProps> = ({
+  url,
+  alt,
+  isMd,
+  style,
+}) => (
+  <motion.div
+    key={encodeURIComponent(url) + "-container"}
+    className={style.image}
+  >
+    <motion.div
+      key={encodeURIComponent(url) + "-animation"}
+      className={css({
+        display: "block",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "rgba(0, 4, 128, 0.6)",
+        zIndex: 10,
+        mixBlendMode: "screen",
+      })}
+      initial={{ opacity: 1 }}
+      whileInView={{ opacity: 0 }}
+      viewport={{ amount: isMd ? 0.5 : 1 }}
+      transition={{ duration: 0.6 }}
+    />
+    <motion.img
+      src={url}
+      alt={alt}
+      initial={{ filter: "grayscale(1)" }}
+      whileInView={{ filter: "grayscale(0)" }}
+      viewport={{ amount: isMd ? 0.5 : 1 }}
+      transition={{ duration: 0.6 }}
+    />
+  </motion.div>
+);

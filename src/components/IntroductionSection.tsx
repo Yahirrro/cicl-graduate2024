@@ -1,6 +1,6 @@
 import { sva } from "../../styled-system/css";
 import { IntroductionImages } from "./IntroductionImages";
-import { FadeInInView } from "./util/FadeInInView";
+import { IntroductionSectionTitle } from "./IntroductionSectionTitle";
 
 const introductionSectionStyles = sva({
   slots: [
@@ -36,7 +36,7 @@ const introductionSectionStyles = sva({
       pb: "0",
       mdDown: {
         gridColumn: "1 / span 3",
-        pb: "32px",
+        pb: "42px",
         gap: "42px",
       },
     },
@@ -47,7 +47,8 @@ const introductionSectionStyles = sva({
       fontWeight: "500",
       fontFeatureSettings: '"palt" on',
       letterSpacing: "-0.04em",
-      "& h2": {
+      textStyle: "demiBold",
+      "& span": {
         textStyle: "demiBold",
       },
       mdDown: {
@@ -82,10 +83,10 @@ export const IntroductionSection: React.FC = () => {
   return (
     <section className={style.container}>
       <div className={style.introductionContainer}>
-        <FadeInInView className={style.introductionTitle} delay={0}>
-          <h2>{`連なる、広がる、巡る。`}</h2>
-        </FadeInInView>
-        <FadeInInView className={style.introductionText} delay={0.8}>
+        <h2 className={style.introductionTitle}>
+          <IntroductionSectionTitle />
+        </h2>
+        <div className={style.introductionText}>
           <p>
             <span>
               私たちが日々発した言葉や生み出してきた作品は、小さな粒として、連なり、広がり、時に反発し合いながら、社会を巻き込んできました。
@@ -109,7 +110,7 @@ export const IntroductionSection: React.FC = () => {
               が生まれることを願っています。
             </span>
           </p>
-        </FadeInInView>
+        </div>
       </div>
       <IntroductionImages />
     </section>
