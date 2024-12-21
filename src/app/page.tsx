@@ -21,9 +21,7 @@ export default function Home() {
     <TopPageContainer>
       <LoadingAnimation />
 
-      <TopSection>
-        <VisualViewer />
-      </TopSection>
+      <TopSection />
 
       <BgWhite>
         <IntroductionSection />

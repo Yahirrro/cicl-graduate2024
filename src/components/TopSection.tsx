@@ -1,6 +1,11 @@
+"use client";
+
+import { useRef } from "react";
 import { css, cx, sva } from "../../styled-system/css";
 import { TopSectionInnerLink } from "./TopSectionInnerLink";
 import { FadeIn } from "./util/FadeIn";
+import { useInView } from "framer-motion";
+import { VisualViewer } from "./VisualViewer";
 
 const topSectionStyles = sva({
   slots: [
@@ -137,13 +142,15 @@ const topSectionStyles = sva({
   },
 });
 
-export const TopSection: React.FC<{
-  children?: React.ReactNode;
-}> = ({ children }) => {
+export const TopSection: React.FC<{}> = () => {
   const style = topSectionStyles();
+  const ref = useRef<any>();
+  const isInView = useInView(ref, {
+    margin: "128px 0px",
+  });
 
   return (
-    <header className={style.container}>
+    <header className={style.container} ref={ref}>
       <FadeIn className={style.topHeaderContainer} delay={4.5}>
         <p className={style.topHeaderContainerTitle}>
           {`MUSASHINO ART UNIV\nINSTITUTE OF INNOVATION`}
@@ -337,7 +344,9 @@ export const TopSection: React.FC<{
         </div>
       </FadeIn>
 
-      <div className={style.topVisualContainer}>{children}</div>
+      <div className={style.topVisualContainer}>
+        <VisualViewer isInView={isInView} />
+      </div>
     </header>
   );
 };
