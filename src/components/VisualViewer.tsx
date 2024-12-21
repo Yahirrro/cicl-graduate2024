@@ -1,16 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  motion,
-  useInView,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { cva } from "../../styled-system/css";
 import { useIsLoaded } from "@/hooks/useIsLoaded";
-import { useWindowHeight } from "@/hooks/useWindowHeight";
-import { useEffect, useRef, useState } from "react";
 
 const visualViewerStyle = cva({
   base: {

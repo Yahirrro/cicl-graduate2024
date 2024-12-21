@@ -142,9 +142,9 @@ const topSectionStyles = sva({
   },
 });
 
-export const TopSection: React.FC<{}> = () => {
+export const TopSection: React.FC = () => {
   const style = topSectionStyles();
-  const ref = useRef<any>();
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, {
     margin: "128px 0px",
   });
