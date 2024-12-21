@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { TypeSquareLoader } from "@/components/TypeSquareLoader";
@@ -77,21 +78,7 @@ export default function RootLayout({
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "4ebe9d15b03a418c947b403cc07d2503"}'
         />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-RC05NDW2XJ"
-        />
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RC05NDW2XJ');
-</script>`,
-          }}
-        ></div>
+        <GoogleAnalytics gaId="G-RC05NDW2XJ" />
       </body>
     </html>
   );
