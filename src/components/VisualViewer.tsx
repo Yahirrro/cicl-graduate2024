@@ -9,7 +9,7 @@ const visualViewerStyle = cva({
     position: "relative",
     width: "100%",
     height: "100%",
-    background: "rgba(5, 7, 64, 1)",
+    background: "#002243",
     userSelect: "none",
 
     "& iframe": {
@@ -25,9 +25,9 @@ const visualViewerStyle = cva({
       left: 0,
       width: "100%",
       height: "100%",
-      background: "rgba(5, 7, 64, 1)",
+      background: "#002243",
       zIndex: 1,
-      mixBlendMode: "screen",
+      mixBlendMode: "lighten",
     },
     "&:after": {
       content: '""',

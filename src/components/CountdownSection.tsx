@@ -14,14 +14,14 @@ const countDownSectionStyles = sva({
       pb: "172px",
       maxWidth: "1980px",
       mx: "auto",
-      color: "rgba(0, 4, 128, 1)",
+      color: "text",
       _before: {
         content: '""',
         display: "block",
         gridColumn: "1 / span 2",
         width: "80%",
         height: "1px",
-        background: "rgba(0, 4, 128, 1)",
+        background: "text",
         mdDown: {
           gridColumn: "span 1",
           width: "1px",

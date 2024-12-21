@@ -156,7 +156,7 @@ export const TopSection: React.FC = () => {
           {`MUSASHINO ART UNIV\nINSTITUTE OF INNOVATION`}
         </p>
         <p className={style.topHeaderContainerSubtitle}>
-          {`武蔵野美術大学造形構想学部クリエイティブイノベーション学科\n造形構想研究科造形構想専攻クリエイティブリーダーシップコース`}
+          {`武蔵野美術大学造形構想学部クリエイティブイノベーション学科 CI\n造形構想研究科造形構想専攻クリエイティブリーダーシップコース CL`}
         </p>
       </FadeIn>
       <FadeIn className={style.topTitleContainer} delay={3} duration={3}>

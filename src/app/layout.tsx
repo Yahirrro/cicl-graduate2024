@@ -35,7 +35,7 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "武蔵野美術大学 Institute of Innovation 卒業・修了展 2024",
+  title: "武蔵野美術大学 CI・CL卒業・修了展 2024",
   description:
     "武蔵野美術大学造形構想学部クリエイティブイノベーション学科 造形構想研究科造形構想専攻クリエイティブリーダーシップコース 卒業制作展 2024",
   openGraph: {
@@ -66,7 +66,7 @@ export default function RootLayout({
       <body
         className={cx(
           css({
-            background: "rgba(5, 7, 64, 1)",
+            background: "background",
           }),
           `${basicallyASansSerif.variable} ${notoSansJP.variable}`
         )}

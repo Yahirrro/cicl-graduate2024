@@ -1,12 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { token } from "../../styled-system/tokens";
 
 export const IntroductionSectionTitle: React.FC = () => {
   const props = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1 },
-    transition: { duration: 1.5, delay: 0 },
+    initial: { opacity: 0, y: 20, color: "rgba(0, 4, 128, 1)" },
+    whileInView: { opacity: 1, color: token("colors.text") },
+    transition: {
+      duration: 1.5,
+      delay: 0,
+      color: {
+        duration: 0.8,
+      },
+    },
     viewport: { once: true },
   };
 

@@ -215,7 +215,7 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({
         left: 0,
         width: "100%",
         height: "100%",
-        background: "rgba(0, 4, 128, 0.6)",
+        background: "text60",
         zIndex: 10,
         mixBlendMode: "screen",
       })}

@@ -20,7 +20,7 @@ const introductionSectionStyles = sva({
       pb: "0px",
       maxWidth: "1920px",
       mx: "auto",
-      color: "rgba(0, 4, 128, 1)",
+      color: "text",
       mdDown: {
         pt: "92px",
         pb: "0px",
