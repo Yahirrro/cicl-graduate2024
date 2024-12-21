@@ -92,10 +92,6 @@ export const IntroductionImages: React.FC = () => {
 
   useEffect(() => {
     if (carouselRef.current) {
-      console.log(
-        "carouselRef.current.scrollWidth",
-        carouselRef.current.scrollWidth
-      );
       setCarouselWidth(carouselRef.current.scrollWidth);
     }
   }, [width]);
