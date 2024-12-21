@@ -8,12 +8,12 @@
 
 ## Contributors
 
-### Yahiro Nakamoto ( @Yahirrro )
+### Yahiro Nakamoto ([@Yahirrro](https://github.com/Yahirrro))
 
 Webサイトのデザイン、実装、デプロイ
 
 https://yahiro.me
 
-### Koyo Arai ( @kkkkoyo )
+### Koyo Arai ([@kkkkoyo](https://github.com/kkkkoyo))
 
 p5.jsを用いたアートワークの実装
