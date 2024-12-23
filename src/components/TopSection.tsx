@@ -332,7 +332,7 @@ export const TopSection: React.FC = () => {
         >
           {`ICHIGAYA CAMPUS,\nMUSASHINO ART UNIV.`}
         </p>
-        <p className={style.topInfoContainerText}>{`2024/01/31 - 02/02`}</p>
+        <p className={style.topInfoContainerText}>{`2025/01/31 - 02/02`}</p>
         <p className={style.topInfoContainerText}>{`10:00 - 20:00 OPEN`}</p>
         <div className={style.topInfoLinkContainer}>
           <TopSectionInnerLink className={style.topInfoLink} />
