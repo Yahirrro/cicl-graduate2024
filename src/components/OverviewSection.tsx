@@ -149,7 +149,9 @@ export const OverviewSection: React.FC = () => {
         <p className={style.text}>
           {`2025年 1月31日(金)〜2月2日(日)    10:00~20:00`}
         </p>
-        <p className={style.detailText}>{`入場にご予約は不要です。`}</p>
+        <p
+          className={style.detailText}
+        >{`入場にご予約は不要です。\n入場は19:30までとなっております。`}</p>
         <h2
           className={cx(
             style.title,
