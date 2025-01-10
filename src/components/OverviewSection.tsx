@@ -69,21 +69,21 @@ const overviewSectionStyles = sva({
       fontStyle: "normal",
     },
     text: {
-      fontSize: "17px",
+      fontSize: "19px",
       lineHeight: "150%",
       whiteSpace: "pre-line",
       fontWeight: "500",
       textStyle: "demiBold",
     },
     detailText: {
-      fontSize: "13px",
+      fontSize: "15px",
       mt: "20px",
       mdDown: {
         mt: "10px",
       },
     },
     subtext: {
-      fontSize: "11px",
+      fontSize: "14px",
       opacity: 0.5,
       mdDown: {
         fontSize: "12px",
@@ -99,7 +99,7 @@ const overviewSectionStyles = sva({
       borderBottom: "1px solid currentColor",
       width: "fit-content",
       textTransform: "uppercase",
-      fontSize: "14px",
+      fontSize: "15px",
       fontWeight: 500,
       "& span": {
         display: "block",
