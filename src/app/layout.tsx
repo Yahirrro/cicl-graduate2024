@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { TypeSquareLoader } from "@/components/TypeSquareLoader";
@@ -34,7 +35,7 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "武蔵野美術大学 Institute of Innovation 卒業・修了展 2024",
+  title: "武蔵野美術大学 CI・CL卒業・修了展 2024",
   description:
     "武蔵野美術大学造形構想学部クリエイティブイノベーション学科 造形構想研究科造形構想専攻クリエイティブリーダーシップコース 卒業制作展 2024",
   openGraph: {
@@ -65,7 +66,7 @@ export default function RootLayout({
       <body
         className={cx(
           css({
-            background: "rgba(5, 7, 64, 1)",
+            background: "background",
           }),
           `${basicallyASansSerif.variable} ${notoSansJP.variable}`
         )}
@@ -77,21 +78,7 @@ export default function RootLayout({
           src="https://static.cloudflareinsights.com/beacon.min.js"
           data-cf-beacon='{"token": "4ebe9d15b03a418c947b403cc07d2503"}'
         />
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-RC05NDW2XJ"
-        />
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-RC05NDW2XJ');
-</script>`,
-          }}
-        ></div>
+        <GoogleAnalytics gaId="G-RC05NDW2XJ" />
       </body>
     </html>
   );

@@ -2,19 +2,23 @@
 
 "use client";
 
+import { fontLoadingAtom } from "@/atom";
 import { loadTypeSquare } from "@/utils/loadTypeSquare";
+import { useAtom } from "jotai";
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const TypeSquareLoader: React.FC = () => {
-  const [, setFontLoading] = useState(true);
+  const [, setFontLoading] = useAtom(fontLoadingAtom);
 
   const isInjectTypeSquare = () => {
     if (typeof window === "undefined") return false;
 
     if (
-      window.location.hostname.includes("pages.dev") &&
-      window.location.hostname !== "cicl-graduate2024.pages.dev"
+      (window.location.hostname.includes("pages.dev") &&
+        window.location.hostname !== "cicl-graduate2024.pages.dev") ||
+      (window.location.hostname.includes("musabi.ac.jp") &&
+        window.location.hostname !== "ciclgs24.musabi.ac.jp")
     ) {
       return false;
     }

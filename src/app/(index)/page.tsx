@@ -1,7 +1,6 @@
 import { CountDownSection } from "@/components/CountdownSection";
 import { IntroductionSection } from "@/components/IntroductionSection";
 import { TopSection } from "@/components/TopSection";
-import { VisualViewer } from "@/components/VisualViewer";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
 import { styled } from "../../../styled-system/jsx";
 import { LinkSection } from "@/components/LinkSection";
@@ -19,9 +18,7 @@ export default function Home() {
     <>
       <LoadingAnimation />
 
-      <TopSection>
-        <VisualViewer />
-      </TopSection>
+      <TopSection />
 
       <BgWhite>
         <IntroductionSection />

@@ -36,6 +36,17 @@ export default defineConfig({
         },
       },
       tokens: {
+        colors: {
+          background: {
+            value: "#002243",
+          },
+          text: {
+            value: "rgb(12, 43, 116)",
+          },
+          text60: {
+            value: "rgba(12, 43, 116, 0.6)",
+          },
+        },
         fontSizes: {
           extraSmall: {
             value: "12px",

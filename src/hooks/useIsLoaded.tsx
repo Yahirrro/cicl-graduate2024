@@ -1,29 +1,21 @@
-import { useEffect, useState } from "react";
+import { fontLoadingAtom } from "@/atom";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 
 export const useIsLoaded = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [fontLoaded, setFontLoaded] = useAtom(fontLoadingAtom);
 
   useEffect(() => {
-    const handleLoad = () => {
-      if (!isLoaded) {
-        setIsLoaded(true);
-        clearTimeout(timeout);
-      }
-    };
-
     const timeout = setTimeout(() => {
-      if (!isLoaded) {
-        setIsLoaded(true);
+      if (!fontLoaded) {
+        setFontLoaded(true);
       }
-    }, 4000);
-
-    window.addEventListener("load", handleLoad);
+    }, 3000);
 
     return () => {
-      window.removeEventListener("load", handleLoad);
       clearTimeout(timeout);
     };
-  }, [isLoaded]);
+  }, [fontLoaded]);
 
-  return isLoaded;
+  return fontLoaded;
 };

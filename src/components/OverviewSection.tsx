@@ -23,14 +23,14 @@ const overviewSectionStyles = sva({
       pb: "128px",
       maxWidth: "1980px",
       mx: "auto",
-      color: "rgba(0, 4, 128, 1)",
+      color: "text",
       _before: {
         content: '""',
         position: "absolute",
         display: "block",
         width: "100%",
         height: "1px",
-        background: "rgba(0, 4, 128, 1)",
+        background: "text",
         gridColumn: "1 / span 5",
         mdDown: {
           gridColumn: "span 1",
@@ -96,7 +96,7 @@ const overviewSectionStyles = sva({
       gap: "10px",
       alignSelf: "stretch",
       height: "32px",
-      borderBottom: "1px solid rgba(0, 4, 128, 1)",
+      borderBottom: "1px solid currentColor",
       width: "fit-content",
       textTransform: "uppercase",
       fontSize: "14px",
@@ -128,16 +128,21 @@ export const OverviewSection: React.FC<{
     <section className={style.container} id="overview">
       <div className={style.overviewSection}>
         <h2 className={style.title}>Overview</h2>
-        <p className={style.text}>
-          {`武蔵野美術大学\n造形構想学部\nクリエイティブイノベーション学科
-造形構想研究科造形構想専攻\nクリエイティブリーダーシップコース
-卒業制作展 2024`}
+        <p
+          className={cx(
+            style.text,
+            css({
+              fontWeight: "800",
+            })
+          )}
+        >
+          {`武蔵野美術大学\nInstitute of Innovation\n卒業・修了展 2024`}
         </p>
         <p
           className={cx(
             style.subtext,
             css({
-              mt: "64px",
+              mt: "40px",
               width: "50%",
               mdDown: {
                 width: "100%",
@@ -146,7 +151,7 @@ export const OverviewSection: React.FC<{
             })
           )}
         >
-          {`＊本展は、クリエイティブイノベーション学科、大学院造形構想研究科クリエイティブリーダーシップコースの制作研究の卒業・修了展となります。 クリエイティブイノベーション学科、大学院造形構想研究科クリエイティブリーダーシップコース以外の学科・コースの展示は、鷹の台キャンパスで行います。`}
+          {`＊本展は、造形構想学部クリエイティブイノベーション学科、大学院造形構想研究科クリエイティブリーダーシップコースの卒業・修了展となります。 クリエイティブイノベーション学科、大学院造形構想研究科クリエイティブリーダーシップコース以外の学科・コースの展示は、鷹の台キャンパスで行います。`}
         </p>
       </div>
 
@@ -181,7 +186,7 @@ export const OverviewSection: React.FC<{
             })
           )}
         >
-          {`〒162-0843 東京都新宿区市谷田町１丁目４`}
+          {`〒162-0843 東京都新宿区市谷田町1丁目4`}
         </p>
         <Link
           className={style.locationLink}

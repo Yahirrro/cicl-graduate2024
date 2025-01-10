@@ -16,7 +16,7 @@ const footerStyles = sva({
   ],
   base: {
     wrapper: {
-      background: "rgba(5, 7, 64, 1)",
+      background: "background",
       color: "rgba(255, 255, 255, 1)",
     },
     container: {
@@ -129,8 +129,16 @@ export const Footer: React.FC<{
             className={cx(style.text, style.textUppercase)}
           >{`Musashino Art Univ.\nInstitute of Innovation`}</p>
           <h2
-            className={style.text}
-          >{`武蔵野美術大学造形構想学部クリエイティブイノベーション学科\n造形構想研究科造形構想専攻クリエイティブリーダーシップコース卒業制作展 2024`}</h2>
+            className={cx(
+              style.text,
+              css({
+                whiteSpace: "initial",
+                mdDown: {
+                  whiteSpace: "pre-wrap",
+                },
+              })
+            )}
+          >{`武蔵野美術大学 Institute of Innovation\n造形構想学部クリエイティブイノベーション学科\n大学院造形構想研究科造形構想専攻クリエイティブリーダーシップコース卒業制作展 2024`}</h2>
 
           <div className={style.socialContainer}>
             <a

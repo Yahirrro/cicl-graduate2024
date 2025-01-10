@@ -1,18 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { cva } from "../../styled-system/css";
 import { useIsLoaded } from "@/hooks/useIsLoaded";
-import { useWindowHeight } from "@/hooks/useWindowHeight";
-import { useRef, useState } from "react";
 
 const visualViewerStyle = cva({
   base: {
     position: "relative",
     width: "100%",
     height: "100%",
-    background: "rgba(5, 7, 64, 1)",
+    background: "#002243",
     userSelect: "none",
 
     "& iframe": {
@@ -28,9 +25,9 @@ const visualViewerStyle = cva({
       left: 0,
       width: "100%",
       height: "100%",
-      background: "rgba(5, 7, 64, 1)",
+      background: "#002243",
       zIndex: 1,
-      mixBlendMode: "screen",
+      mixBlendMode: "lighten",
     },
     "&:after": {
       content: '""',
@@ -45,21 +42,11 @@ const visualViewerStyle = cva({
   },
 });
 
-export const VisualViewer: React.FC = () => {
+export const VisualViewer: React.FC<{
+  isInView: boolean;
+}> = ({ isInView }) => {
   const isLoaded = useIsLoaded();
   const style = visualViewerStyle();
-  const ref = useRef<any>();
-  const { scrollY } = useScroll();
-  const windowHeight = useWindowHeight();
-  const [isExceededHeight, setIsExceededHeight] = useState(false);
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > windowHeight && !isExceededHeight) {
-      setIsExceededHeight(true);
-    } else if (latest <= windowHeight && isExceededHeight) {
-      setIsExceededHeight(false);
-    }
-  });
 
   if (!isLoaded) {
     return <></>;
@@ -67,7 +54,6 @@ export const VisualViewer: React.FC = () => {
 
   return (
     <motion.div
-      ref={ref}
       className={style}
       initial={{ scale: 1.2, filter: "blur(30px)" }}
       animate={{
@@ -83,7 +69,7 @@ export const VisualViewer: React.FC = () => {
         },
       }}
     >
-      {!isExceededHeight && (
+      {isInView && (
         <iframe
           src="/assets/p5.html"
           width="100%"
