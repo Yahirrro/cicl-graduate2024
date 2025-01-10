@@ -106,10 +106,21 @@ const footerStyles = sva({
       mdDown: { mb: "32px" },
     },
   },
+  variants: {
+    isPage: {
+      true: {
+        container: {
+          maxWidth: "calc(1496px + 72px * 2)",
+        },
+      },
+    },
+  },
 });
 
-export const Footer: React.FC = () => {
-  const style = footerStyles();
+export const Footer: React.FC<{
+  isPage?: boolean;
+}> = ({ isPage }) => {
+  const style = footerStyles({ isPage });
   return (
     <footer className={style.wrapper}>
       <div className={style.container}>
