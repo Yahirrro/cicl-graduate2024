@@ -1,5 +1,4 @@
 import { sva } from "../../styled-system/css";
-import { SaveButton } from "./SaveButton";
 import { ShareButton } from "./ShareButton";
 
 const exhibitorsArticleShareStyles = sva({
@@ -27,9 +26,9 @@ export const ExhibitorsArticleShare: React.FC = () => {
   const styles = exhibitorsArticleShareStyles();
   return (
     <div className={styles.container}>
-      <div className={styles.saveButton}>
+      {/* <div className={styles.saveButton}>
         <SaveButton reverse showDescription />
-      </div>
+      </div> */}
       <div className={styles.saveButton}>
         <ShareButton reverse />
       </div>

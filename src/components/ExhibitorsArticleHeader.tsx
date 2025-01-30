@@ -1,5 +1,6 @@
 import { ExhibitionRecord } from "@/types";
-import { sva } from "../../styled-system/css";
+import { css, sva } from "../../styled-system/css";
+import { Award } from "lucide-react";
 // import { SaveButton } from "./SaveButton";
 
 const exhibitorsArticleHeaderStyles = sva({
@@ -67,7 +68,7 @@ export const ExhibitorsArticleHeader: React.FC<
   ExhibitionRecord & {
     isLongText?: boolean;
   }
-> = ({ title, name, seminar, place, isLongText }) => {
+> = ({ title, name, seminar, place, isLongText, award }) => {
   const style = exhibitorsArticleHeaderStyles({
     isLongText,
   });
@@ -79,6 +80,32 @@ export const ExhibitorsArticleHeader: React.FC<
         <p>{name}</p>
         <p>{seminar}</p>
         <p>{place}</p>
+        {award && (
+          <div>
+            <p
+              className={css({
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                fontSize: "15px",
+                py: "4px",
+                px: "6px 10px",
+                bg: "rgba(217, 224, 25, 0.1)",
+                border: "2px solid rgba(217, 224, 25, 0.3)",
+                borderRadius: "4px",
+                mdDown: {
+                  fontSize: "13px",
+                  py: "2px",
+                  px: "3px 5px",
+                  gap: "4px",
+                },
+              })}
+            >
+              <Award size={20} />
+              {award}
+            </p>
+          </div>
+        )}
       </div>
       <div className={style.save}>{/* <SaveButton /> */}</div>
     </header>
