@@ -82,7 +82,7 @@ export const PageHeader: React.FC<{
     <header
       className={style.wrapper}
       style={{
-        backgroundImage: "url(./bg.png)",
+        backgroundImage: "url(/bg.png)",
       }}
       {...rest}
     >

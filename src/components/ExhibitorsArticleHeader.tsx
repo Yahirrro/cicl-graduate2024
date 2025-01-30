@@ -1,6 +1,7 @@
 import { ExhibitionRecord } from "@/types";
 import { css, sva } from "../../styled-system/css";
 import { Award } from "lucide-react";
+import Link from "next/link";
 // import { SaveButton } from "./SaveButton";
 
 const exhibitorsArticleHeaderStyles = sva({
@@ -11,7 +12,7 @@ const exhibitorsArticleHeaderStyles = sva({
       gridTemplateColumns: "subgrid",
       gridColumn: "span 5",
       gap: "24px",
-      pt: "64px",
+      pt: "42px",
       pb: "64px",
       mdDown: {
         gridColumn: "span 2",
@@ -21,8 +22,11 @@ const exhibitorsArticleHeaderStyles = sva({
     title: {
       fontSize: "64px",
       gridColumn: "span 4",
+      pb: "32px",
+      wordBreak: "keep-all",
       mdDown: {
         gridColumn: "span 2",
+        pb: "16px",
         fontSize: "32px",
       },
     },
@@ -75,6 +79,22 @@ export const ExhibitorsArticleHeader: React.FC<
   });
   return (
     <header className={style.container}>
+      <Link
+        href="/exhibitors"
+        className={css({
+          gridColumn: "span 5",
+          fontSize: "20px",
+          color: "rgba(0, 4, 128, 1)",
+          textDecoration: "none",
+          mdDown: {
+            gridColumn: "span 2",
+            fontSize: "14px",
+          },
+        })}
+      >
+        展示作品
+      </Link>
+
       <h1 className={style.title}>{title}</h1>
 
       <div className={style.author}>
