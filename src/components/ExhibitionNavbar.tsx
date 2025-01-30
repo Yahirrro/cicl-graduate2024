@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { sva } from "../../styled-system/css";
 import { ExhibitionNavbarSearch } from "./ExhibitionNavbarSearch";
 
@@ -34,7 +35,7 @@ const exhibitionNavbarStyles = sva({
       display: "flex",
       height: "auto",
       gap: "24px",
-      "& button": {
+      "& a": {
         fontSize: "20px",
         fontWeight: "bold",
         textStyle: "demiBold",
@@ -63,7 +64,11 @@ export const ExhibitionNavbar: React.FC<{
       <div className={styles.container}>
         <div className={styles.floors}>
           {floors.map((f, i) => {
-            return <button key={i}>{f}</button>;
+            return (
+              <Link href={"#floor_" + f} key={i}>
+                {f}
+              </Link>
+            );
           })}
         </div>
         <div className={styles.search}>

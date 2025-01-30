@@ -1,6 +1,6 @@
 import { ExhibitionRecord } from "@/types";
 import { sva } from "../../styled-system/css";
-import { SaveButton } from "./SaveButton";
+// import { SaveButton } from "./SaveButton";
 
 const exhibitorsArticleHeaderStyles = sva({
   slots: ["container", "title", "author", "save"],
@@ -67,7 +67,7 @@ export const ExhibitorsArticleHeader: React.FC<
   ExhibitionRecord & {
     isLongText?: boolean;
   }
-> = ({ title, author, type, floor, area, isLongText }) => {
+> = ({ title, name, seminar, place, isLongText }) => {
   const style = exhibitorsArticleHeaderStyles({
     isLongText,
   });
@@ -76,15 +76,11 @@ export const ExhibitorsArticleHeader: React.FC<
       <h1 className={style.title}>{title}</h1>
 
       <div className={style.author}>
-        <p>{author}</p>
-        <p>{type}</p>
-        <p>
-          {floor} {area}
-        </p>
+        <p>{name}</p>
+        <p>{seminar}</p>
+        <p>{place}</p>
       </div>
-      <div className={style.save}>
-        <SaveButton />
-      </div>
+      <div className={style.save}>{/* <SaveButton /> */}</div>
     </header>
   );
 };

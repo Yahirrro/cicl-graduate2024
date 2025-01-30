@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { styled } from "../../../../styled-system/jsx";
 import { ExhibitionNavbar } from "@/components/ExhibitionNavbar";
 import { ExhibitionFloorSection } from "@/components/ExhibitionFloorSection";
-import { getSortedFloors } from "@/utils/getSortedFloors";
+import { getSortedFloors, isInFloor } from "@/utils/getSortedFloors";
 import { ExhibitionRecord } from "@/types";
 
 export const runtime = "edge";
@@ -27,13 +27,15 @@ const Container = styled("div", {
 
 export default async function Home() {
   const items: ExhibitionRecord[] = await fetch(
-    "https://notion-api.splitbee.io/v1/table/15fa6dea5dcd80828cf1e972020a1cce",
+    "https://notion-api.splitbee.io/v1/table/184a6dea5dcd80d5b64bde9d64a70333",
     {
       next: {
         tags: ["items"],
+        revalidate: 1,
       },
     }
   ).then((res) => res.json());
+
   const floors: string[] = getSortedFloors(items);
 
   return (
@@ -46,8 +48,8 @@ export default async function Home() {
           return (
             <ExhibitionFloorSection
               floor={floor}
-              items={items.filter(
-                (item: ExhibitionRecord) => item.floor === floor
+              items={items.filter((item: ExhibitionRecord) =>
+                isInFloor(item.place, floor)
               )}
               key={i}
             />

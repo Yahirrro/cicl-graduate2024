@@ -1,10 +1,11 @@
 export interface ExhibitionRecord {
   id: string;
-  author: string; // 作者名
-  type: string; // 制作 or プロジェクト or 未設定
-  title: string; // 作品名 or 論文名
-  description: string; // 概要
-  category: string; // undergraduate or graduate
-  floor: string; // フロア（例: "5F", "B2F", "未設定"）
-  area: string; // エリア（例: "503", "多目的空間", "未設定"）
+  title: string; // 作品名
+  caption: string; // 作品説明
+  seminar: string; // ゼミ名
+  material: string; // 使用素材
+  place: string; // 展示場所
+  studies: string; // 学部 or 大学院
+  name: string; // 作者名
+  award?: string; // 受賞歴
 }

@@ -1,6 +1,8 @@
 import { sva } from "../../styled-system/css";
 import { ExhibitionRecord } from "@/types";
+import { Award } from "lucide-react";
 import Link from "next/link";
+import { Box } from "../../styled-system/jsx";
 
 const exhibitionFloorSection = sva({
   slots: ["wrapper", "title", "section"],
@@ -53,8 +55,15 @@ export const ExhibitionFloorSection: React.FC<{
   const style = exhibitionFloorSection();
 
   return (
-    <div className={style.wrapper}>
-      <h2 className={style.title}>{floor}</h2>
+    <div className={style.wrapper} id={`floor_${floor}`}>
+      <h2
+        className={style.title}
+        style={{
+          fontSize: floor === "未回答" ? "24px" : "48px",
+        }}
+      >
+        {floor}
+      </h2>
       <div className={style.section}>
         {items.map((data, i) => {
           return <ExhibitionFloorSectionItem item={data} key={i} />;
@@ -65,7 +74,7 @@ export const ExhibitionFloorSection: React.FC<{
 };
 
 const exhibitionFloorSectionItemStyles = sva({
-  slots: ["wrapper", "container", "title", "author", "icon"],
+  slots: ["wrapper", "container", "title", "author", "icon", "info", "award"],
   base: {
     wrapper: {
       display: "grid",
@@ -101,6 +110,26 @@ const exhibitionFloorSectionItemStyles = sva({
     icon: {
       opacity: 0.3,
     },
+    info: {
+      display: "flex",
+      alignItems: "center",
+      gap: "14px",
+    },
+    award: {
+      fontSize: "14px",
+      display: "inline-flex",
+      alignItems: "center",
+      py: "2px",
+      px: "8px",
+      bg: "rgba(217, 224, 25, 0.1)",
+      borderRadius: "4px",
+      border: "2px solid rgba(217, 224, 25, 0.3)",
+      lineHeight: "1",
+      "& svg": {
+        w: "14px",
+        mr: "4px",
+      },
+    },
   },
 });
 
@@ -108,11 +137,47 @@ const ExhibitionFloorSectionItem: React.FC<{ item: ExhibitionRecord }> = ({
   item,
 }) => {
   const style = exhibitionFloorSectionItemStyles();
+
+  if (item.place === "0") {
+    return (
+      <Box className={style.wrapper}>
+        <div className={style.container}>
+          <h1 className={style.title}>{item.title}</h1>
+          <div className={style.info}>
+            <p className={style.author}>{item.name}</p>
+            {item.award && (
+              <p className={style.award}>
+                <Award />
+                {item.award}
+              </p>
+            )}
+          </div>
+        </div>
+        <svg
+          viewBox="0 0 10 21"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={style.icon}
+        >
+          <path d="M1 0.5L9 10.5L1 20.5" stroke="#000480" />
+        </svg>
+      </Box>
+    );
+  }
+
   return (
     <Link className={style.wrapper} href={`/exhibitors/${item.id}`}>
       <div className={style.container}>
         <h1 className={style.title}>{item.title}</h1>
-        <p className={style.author}>{item.author}</p>
+        <div className={style.info}>
+          <p className={style.author}>{item.name}</p>
+          {item.award && (
+            <p className={style.award}>
+              <Award />
+              {item.award}
+            </p>
+          )}
+        </div>
       </div>
       <svg
         viewBox="0 0 10 21"
