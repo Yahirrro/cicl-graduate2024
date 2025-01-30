@@ -1,7 +1,7 @@
 "use client";
 
 import { cubicBezier, motion } from "framer-motion";
-import { sva } from "../../styled-system/css";
+import { css, cx, sva } from "../../styled-system/css";
 import { useMediaQuery } from "react-responsive";
 
 const countDownSectionNumberStyle = sva({
@@ -49,12 +49,34 @@ const countDownSectionNumberStyle = sva({
 export const CountDownSectionNumber: React.FC<{
   tensDigit: number;
   onesDigit: number;
-}> = ({ tensDigit, onesDigit }) => {
+  text?: string;
+}> = ({ tensDigit, onesDigit, text }) => {
   const style = countDownSectionNumberStyle();
 
   const isMd = useMediaQuery({
     query: "(max-width: 47.9975rem)",
   });
+
+  if (text) {
+    return (
+      <span
+        className={cx(
+          style.container,
+          css({
+            height: {
+              base: "60px !important",
+              md: "45px",
+            },
+          })
+        )}
+      >
+        <span style={{ fontSize: isMd ? "45px" : "60px", lineHeight: "1" }}>
+          {text}
+        </span>
+      </span>
+    );
+  }
+
   return (
     <span className={style.container}>
       <span className={style.tenoneConainer}>

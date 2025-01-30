@@ -1,11 +1,9 @@
 import { CountDownSection } from "@/components/CountdownSection";
-import { Footer } from "@/components/Footer";
 import { IntroductionSection } from "@/components/IntroductionSection";
-import { OverviewSection } from "@/components/OverviewSection";
 import { TopSection } from "@/components/TopSection";
 import { LoadingAnimation } from "@/components/LoadingAnimation";
-import { TopPageContainer } from "@/components/TopPageContainer";
-import { styled } from "../../styled-system/jsx";
+import { styled } from "../../../styled-system/jsx";
+import { LinkSection } from "@/components/LinkSection";
 
 export const runtime = "edge";
 
@@ -17,7 +15,7 @@ const BgWhite = styled("div", {
 
 export default function Home() {
   return (
-    <TopPageContainer>
+    <>
       <LoadingAnimation />
 
       <TopSection />
@@ -25,9 +23,8 @@ export default function Home() {
       <BgWhite>
         <IntroductionSection />
         <CountDownSection />
-        <OverviewSection />
-        <Footer />
+        <LinkSection />
       </BgWhite>
-    </TopPageContainer>
+    </>
   );
 }

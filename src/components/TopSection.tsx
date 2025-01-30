@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { css, cx, sva } from "../../styled-system/css";
+// import { LogoTypography } from "./LogoTypegraphy";
 import { TopSectionInnerLink } from "./TopSectionInnerLink";
 import { FadeIn } from "./util/FadeIn";
 import { useInView } from "framer-motion";

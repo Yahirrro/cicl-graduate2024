@@ -109,10 +109,21 @@ const overviewSectionStyles = sva({
       },
     },
   },
+  variants: {
+    isPage: {
+      true: {
+        container: {
+          maxWidth: "calc(1496px + 72px * 2)",
+        },
+      },
+    },
+  },
 });
 
-export const OverviewSection: React.FC = () => {
-  const style = overviewSectionStyles();
+export const OverviewSection: React.FC<{
+  isPage?: boolean;
+}> = ({ isPage }) => {
+  const style = overviewSectionStyles({ isPage });
   return (
     <section className={style.container} id="overview">
       <div className={style.overviewSection}>
