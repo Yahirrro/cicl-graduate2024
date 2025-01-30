@@ -7,6 +7,7 @@ import { ExhibitionRecord } from "@/types";
 import { NoSearchResults } from "@/components/NoSearchResults";
 import { ExhibitionNavbarSearch } from "@/components/ExhibitionNavbarSearch";
 import { css } from "../../../../styled-system/css";
+import { Metadata } from "next";
 
 export const runtime = "edge";
 
@@ -30,6 +31,10 @@ const Container = styled("div", {
 
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export const metadata: Metadata = {
+  title: "展示一覧 | 武蔵野美術大学 CI・CL卒業・修了展 2024",
 };
 
 export default async function Home({ searchParams }: Props) {

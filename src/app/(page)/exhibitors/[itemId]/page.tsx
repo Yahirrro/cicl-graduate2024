@@ -7,6 +7,33 @@ import { notFound } from "next/navigation";
 
 export const runtime = "edge";
 
+export async function generateMetadata({
+  params: { itemId },
+}: {
+  params: { itemId: string };
+}) {
+  const items: ExhibitionRecord[] = await fetch(
+    "https://notion-api.splitbee.io/v1/table/184a6dea5dcd80d5b64bde9d64a70333",
+    {
+      next: {
+        tags: ["items"],
+        revalidate: 1,
+      },
+    }
+  ).then((res) => res.json());
+
+  const item = items.find((item) => item.id === itemId);
+
+  if (!item) {
+    return notFound();
+  }
+
+  return {
+    title: `${item.title} | ${item.name} | 武蔵野美術大学 CI・CL卒業・修了展 2024`,
+    description: item.caption,
+  };
+}
+
 const Wrapper = styled("div", {
   base: {
     px: "72px",
