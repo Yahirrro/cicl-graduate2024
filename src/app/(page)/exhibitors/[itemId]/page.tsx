@@ -22,7 +22,10 @@ export async function generateMetadata({
     }
   ).then((res) => res.json());
 
-  const item = items.find((item) => item.id === itemId);
+  const item = items
+    // placeが0のものは非表示
+    .filter((item) => item.place !== "0")
+    .find((item) => item.id === itemId);
 
   if (!item) {
     return notFound();
@@ -88,7 +91,10 @@ export default async function Page({
     }
   ).then((res) => res.json());
 
-  const item = items.find((item) => item.id === itemId);
+  const item = items
+    // placeが0のものは非表示
+    .filter((item) => item.place !== "0")
+    .find((item) => item.id === itemId);
 
   if (!item) {
     return notFound();
