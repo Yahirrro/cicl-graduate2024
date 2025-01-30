@@ -18,7 +18,7 @@ const exhibitorsArticleHeaderStyles = sva({
     },
     title: {
       fontSize: "64px",
-      gridColumn: "span 3",
+      gridColumn: "span 4",
       mdDown: {
         gridColumn: "span 2",
         fontSize: "40px",

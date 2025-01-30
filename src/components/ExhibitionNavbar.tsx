@@ -3,7 +3,7 @@ import { sva } from "../../styled-system/css";
 import { ExhibitionNavbarSearch } from "./ExhibitionNavbarSearch";
 
 const exhibitionNavbarStyles = sva({
-  slots: ["wrapper", "container", "floors", "search"],
+  slots: ["wrapper", "container", "floors", "search", "floorCount"],
   base: {
     wrapper: {
       marginTop: "24px",
@@ -34,12 +34,13 @@ const exhibitionNavbarStyles = sva({
       gridColumn: "1/3",
       display: "flex",
       height: "auto",
-      gap: "24px",
+      gap: "12px",
       "& a": {
         fontSize: "20px",
         fontWeight: "bold",
         textStyle: "demiBold",
         color: "rgba(0, 4, 128, 1)",
+        alignContent: "center",
         mdDown: {
           fontSize: "14px",
         },
@@ -51,25 +52,38 @@ const exhibitionNavbarStyles = sva({
         display: "none",
       },
     },
+    floorCount: {
+      color: "rgba(0, 4, 128, 0.3)",
+      fontSize: "14px",
+      ml: "2px",
+    },
   },
 });
 
-export const ExhibitionNavbar: React.FC<{
+type Props = {
   floors: string[];
-}> = ({ floors }) => {
+  floorCounts: Record<string, number>;
+};
+
+export const ExhibitionNavbar: React.FC<Props> = ({ floors, floorCounts }) => {
   const styles = exhibitionNavbarStyles();
 
   return (
     <nav className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.floors}>
-          {floors.map((f, i) => {
-            return (
-              <Link href={"#floor_" + f} key={i}>
-                {f}
-              </Link>
-            );
-          })}
+          {floors
+            .filter((floor) => floor !== "未回答")
+            .map((f, i) => {
+              return (
+                <Link href={"/exhibitors#floor_" + f} key={i}>
+                  {f}
+                  <span className={styles.floorCount}>
+                    ({String(floorCounts[f]).padStart(2, "0")})
+                  </span>
+                </Link>
+              );
+            })}
         </div>
         <div className={styles.search}>
           <ExhibitionNavbarSearch />
