@@ -15,6 +15,7 @@ const exhibitorsArticleHeaderStyles = sva({
       pb: "64px",
       mdDown: {
         gridColumn: "span 2",
+        pb: "32px",
       },
     },
     title: {
@@ -22,7 +23,7 @@ const exhibitorsArticleHeaderStyles = sva({
       gridColumn: "span 4",
       mdDown: {
         gridColumn: "span 2",
-        fontSize: "40px",
+        fontSize: "32px",
       },
     },
 
