@@ -12,7 +12,7 @@ const countDownSectionNumberStyle = sva({
       fontSize: "110px",
       height: "110px",
       display: "flex",
-      justifyContent: "baseline",
+      justifyContent: "end",
       mdDown: {
         fontSize: "80px",
         lineHeight: "1",
@@ -47,10 +47,18 @@ const countDownSectionNumberStyle = sva({
 });
 
 export const CountDownSectionNumber: React.FC<{
+  thousandsDigit?: number;
+  hundredsDigit?: number;
   tensDigit: number;
   onesDigit: number;
   text?: string;
-}> = ({ tensDigit, onesDigit, text }) => {
+}> = ({
+  thousandsDigit = 0,
+  hundredsDigit = 0,
+  tensDigit,
+  onesDigit,
+  text,
+}) => {
   const style = countDownSectionNumberStyle();
 
   const isMd = useMediaQuery({
@@ -79,6 +87,75 @@ export const CountDownSectionNumber: React.FC<{
 
   return (
     <span className={style.container}>
+      {/* 千の位 (0でない場合のみ表示) */}
+      {thousandsDigit > 0 && (
+        <span className={style.tenoneConainer}>
+          <motion.span
+            className={style.tenone}
+            initial={{ y: "0" }}
+            whileInView={
+              isMd
+                ? { y: `-${thousandsDigit * 80}px` }
+                : { y: `-${thousandsDigit * 110}px` }
+            }
+            transition={{
+              delay: 0,
+              duration: 0.8,
+              ease: cubicBezier(0, 0.3, 0.16, 1),
+            }}
+          >
+            {Array.from(Array(10).keys()).map((i) => {
+              return (
+                <span
+                  key={i}
+                  style={{
+                    userSelect: thousandsDigit === i ? "auto" : "none",
+                  }}
+                  aria-hidden={thousandsDigit === i ? "false" : "true"}
+                >
+                  {i}
+                </span>
+              );
+            })}
+          </motion.span>
+        </span>
+      )}
+
+      {/* 百の位 (千の位が表示されているか、百の位が0でない場合に表示) */}
+      {(thousandsDigit > 0 || hundredsDigit > 0) && (
+        <span className={style.tenoneConainer}>
+          <motion.span
+            className={style.tenone}
+            initial={{ y: "0" }}
+            whileInView={
+              isMd
+                ? { y: `-${hundredsDigit * 80}px` }
+                : { y: `-${hundredsDigit * 110}px` }
+            }
+            transition={{
+              delay: 0.1,
+              duration: 0.8,
+              ease: cubicBezier(0, 0.3, 0.16, 1),
+            }}
+          >
+            {Array.from(Array(10).keys()).map((i) => {
+              return (
+                <span
+                  key={i}
+                  style={{
+                    userSelect: hundredsDigit === i ? "auto" : "none",
+                  }}
+                  aria-hidden={hundredsDigit === i ? "false" : "true"}
+                >
+                  {i}
+                </span>
+              );
+            })}
+          </motion.span>
+        </span>
+      )}
+
+      {/* 十の位 */}
       <span className={style.tenoneConainer}>
         <motion.span
           className={style.tenone}
@@ -89,7 +166,7 @@ export const CountDownSectionNumber: React.FC<{
               : { y: `-${tensDigit * 110}px` }
           }
           transition={{
-            delay: 0,
+            delay: thousandsDigit > 0 || hundredsDigit > 0 ? 0.2 : 0,
             duration: 0.8,
             ease: cubicBezier(0, 0.3, 0.16, 1),
           }}
@@ -109,6 +186,8 @@ export const CountDownSectionNumber: React.FC<{
           })}
         </motion.span>
       </span>
+
+      {/* 一の位 */}
       <span className={style.tenoneConainer}>
         <motion.span
           className={style.tenone}
@@ -119,7 +198,7 @@ export const CountDownSectionNumber: React.FC<{
               : { y: `-${onesDigit * 110}px` }
           }
           transition={{
-            delay: 0.1,
+            delay: thousandsDigit > 0 || hundredsDigit > 0 ? 0.3 : 0.1,
             duration: 0.8,
             ease: cubicBezier(0, 0.3, 0.16, 1),
           }}

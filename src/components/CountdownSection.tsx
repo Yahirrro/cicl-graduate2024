@@ -39,7 +39,7 @@ const countDownSectionStyles = sva({
       },
     },
     countdownTitle: {
-      gridColumn: "3 / span 2",
+      gridColumn: "3 / span 1",
       fontSize: "20px",
       textStyle: "demiBold",
       mdDown: {
@@ -48,7 +48,7 @@ const countDownSectionStyles = sva({
       },
     },
     countdownText: {
-      gridColumn: "5 / span 1",
+      gridColumn: "4 / span 2",
       fontSize: "20px",
       overflow: "hidden",
       height: "110px",
@@ -103,15 +103,22 @@ export const CountDownSection: React.FC = () => {
     const diff = now.getTime() - exhibitionEnd.getTime();
     const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    // 経過日数を10の位と1の位に分割
-    const tensDigit = Math.floor(diffDays / 10);
+    // 経過日数を千の位、百の位、10の位、1の位に分割
+    const thousandsDigit = Math.floor(diffDays / 1000);
+    const hundredsDigit = Math.floor((diffDays % 1000) / 100);
+    const tensDigit = Math.floor((diffDays % 100) / 10);
     const onesDigit = diffDays % 10;
 
     return (
       <section className={style.container}>
         <h2 className={style.countdownTitle}>卒業制作展から</h2>
         <p className={style.countdownText}>
-          <CountDownSectionNumber tensDigit={tensDigit} onesDigit={onesDigit} />
+          <CountDownSectionNumber
+            thousandsDigit={thousandsDigit}
+            hundredsDigit={hundredsDigit}
+            tensDigit={tensDigit}
+            onesDigit={onesDigit}
+          />
         </p>
       </section>
     );
@@ -121,15 +128,22 @@ export const CountDownSection: React.FC = () => {
   const diff = exhibitionStart.getTime() - now.getTime();
   const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
-  // カウントダウンの日数を10の位と1の位に分割
-  const tensDigit = Math.floor(diffDays / 10);
+  // カウントダウンの日数を千の位、百の位、10の位、1の位に分割
+  const thousandsDigit = Math.floor(diffDays / 1000);
+  const hundredsDigit = Math.floor((diffDays % 1000) / 100);
+  const tensDigit = Math.floor((diffDays % 100) / 10);
   const onesDigit = diffDays % 10;
 
   return (
     <section className={style.container}>
       <h2 className={style.countdownTitle}>卒業制作展まであと</h2>
       <p className={style.countdownText}>
-        <CountDownSectionNumber tensDigit={tensDigit} onesDigit={onesDigit} />
+        <CountDownSectionNumber
+          thousandsDigit={thousandsDigit}
+          hundredsDigit={hundredsDigit}
+          tensDigit={tensDigit}
+          onesDigit={onesDigit}
+        />
       </p>
     </section>
   );
