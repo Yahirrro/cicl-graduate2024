@@ -27,6 +27,7 @@ const countDownSectionNumberStyle = sva({
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-start",
+      textAlign: "center",
       mdDown: {
         fontSize: "80px",
       },
